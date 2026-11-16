@@ -1,5 +1,7 @@
 # Vortex Racing — motorsport team website
 
+**Live site:** https://vortex-racing.vercel.app (demo content until Supabase is connected)
+
 A production-ready motorsport team website and content studio built on **Next.js 16 (App Router, Cache Components)**, **React 19 + TypeScript**, **Tailwind CSS 4**, **Motion**, **Lucide**, and **Supabase** (Postgres, Auth, Storage). Built for **Vercel**: deploys from GitHub with preview deployments, Vercel Image Optimization, generated Open Graph images, tag-based cache revalidation, **Vercel Web Analytics** and **Speed Insights**.
 
 | Public site | Admin (`/admin`) |
