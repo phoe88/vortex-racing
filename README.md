@@ -1,6 +1,6 @@
 # Vortex Racing — motorsport team website
 
-A production-ready motorsport team website and content studio built on **Next.js 16 (App Router, Cache Components)**, **React 19 + TypeScript**, **Tailwind CSS 4**, **Motion**, **Lucide**, and **Supabase** (Postgres, Auth, Storage). Deploys straight to **Vercel** from GitHub.
+A production-ready motorsport team website and content studio built on **Next.js 16 (App Router, Cache Components)**, **React 19 + TypeScript**, **Tailwind CSS 4**, **Motion**, **Lucide**, and **Supabase** (Postgres, Auth, Storage). Built for **Vercel**: deploys from GitHub with preview deployments, Vercel Image Optimization, generated Open Graph images, tag-based cache revalidation, **Vercel Web Analytics** and **Speed Insights**.
 
 | Public site | Admin (`/admin`) |
 | --- | --- |
@@ -70,10 +70,23 @@ Authorisation is enforced in three layers: `src/proxy.ts` (session refresh + red
 ## 3. Deploy to Vercel
 
 1. Push this repository to GitHub.
-2. In Vercel, **Add New → Project**, import the repo. Framework preset: Next.js (auto-detected; the build command is `next build`).
+2. In Vercel, **Add New → Project** and import the repo. Settings come from `vercel.json`: framework Next.js, dependencies installed with the exact pnpm version the lockfile was made with, and Node.js 24 from `engines.node` in `package.json`.
 3. Add the environment variables from the table above for **Production** and **Preview** (service role key and revalidate secret as *Sensitive*).
-4. Deploy. Every PR gets a preview deployment; `NEXT_PUBLIC_SITE_URL` can be omitted on previews because the app falls back to `VERCEL_URL`.
-5. Optional: point a Supabase **Database Webhook** on the content tables at `POST https://<domain>/api/revalidate` with header `Authorization: Bearer <REVALIDATE_SECRET>` for instant cache purges after direct database edits. Edits made through the admin UI already revalidate immediately.
+4. Under **Settings → Functions**, set the function region closest to your Supabase project's region so server-side queries stay fast.
+5. Deploy. Every PR gets a preview deployment; `NEXT_PUBLIC_SITE_URL` can be omitted on previews because the app falls back to `VERCEL_URL`.
+6. In the project dashboard, open **Analytics** and **Speed Insights** and click **Enable**. The tracking components are already in the root layout (`src/components/layout/vercel-insights.tsx`); they start reporting on the next deployment.
+7. Optional: point a Supabase **Database Webhook** on the content tables at `POST https://<domain>/api/revalidate` with header `Authorization: Bearer <REVALIDATE_SECRET>` for instant cache purges after direct database edits. Edits made through the admin UI already revalidate immediately.
+
+### What runs where on Vercel
+
+| Piece | Vercel feature |
+| --- | --- |
+| Pages, layouts, server actions, route handlers, `proxy.ts` | Vercel Functions (Fluid compute) with the static shell served from the CDN |
+| `"use cache"` reads, `updateTag` / `revalidateTag` | Vercel's cache for Next.js, purged per tag on admin edits |
+| `next/image` (Supabase Storage, demo imagery) | Vercel Image Optimization (AVIF/WebP) |
+| `opengraph-image.tsx`, `icon.tsx` | Open Graph image generation (`next/og`) |
+| `<Analytics />`, `<SpeedInsights />` | Vercel Web Analytics and Speed Insights |
+| Logs and traces | Vercel Observability (built in, no extra setup) |
 
 ## 4. Architecture
 

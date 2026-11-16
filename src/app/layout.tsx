@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { siteConfig, getSiteUrl } from "@/config/site";
+import { VercelInsights } from "@/components/layout/vercel-insights";
 import { fontBody, fontDisplay } from "./fonts";
 import "./globals.css";
 
@@ -37,7 +38,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${fontBody.variable} ${fontDisplay.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <VercelInsights />
+      </body>
     </html>
   );
 }
