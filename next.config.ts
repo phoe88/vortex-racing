@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
   experimental: {
     // Fewer build workers keeps memory in check on small CI machines.
     cpus: 4,
+    // Vercel restores `.next/cache` between deployments. Turbopack's on-disk build
+    // cache then reused a stale `globals.css` after the stylesheet changed, shipping
+    // new markup with old CSS. Builds take a few seconds longer without it and are
+    // always compiled from the committed sources.
+    turbopackFileSystemCacheForBuild: false,
   },
   turbopack: {
     rules: {
