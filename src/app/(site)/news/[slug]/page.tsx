@@ -101,7 +101,7 @@ export default async function ArticlePage({ params }: PageProps<"/news/[slug]">)
 
       {related.length > 0 && (
         <Carousel title="More Stories" className="mt-24 sm:mt-32">
-          {related.map((a) => <ArticleCard key={a.id} article={a} />)}
+          {related.map((a, i) => <ArticleCard key={a.id} article={a} number={i + 1} />)}
         </Carousel>
       )}
     </article>

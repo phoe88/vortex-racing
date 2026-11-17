@@ -11,6 +11,9 @@ import type { Article } from "@/types";
  * - `hero`: the large lead story, with excerpt and a red button.
  * - `overlay`: fills its grid cell, with excerpt and a red button.
  * - `default`: a portrait tile for grids and rails.
+ *
+ * `number` puts a large two-digit position (01, 02 …) in the top-left corner,
+ * used for the numbered story rails.
  */
 type Variant = "default" | "overlay" | "hero";
 
@@ -18,11 +21,14 @@ export function ArticleCard({
   article,
   variant = "default",
   priority = false,
+  number,
   className,
 }: {
   article: Article;
   variant?: Variant;
   priority?: boolean;
+  /** Position in a numbered rail, shown as "01", "02" … */
+  number?: number;
   className?: string;
 }) {
   const href = `/news/${article.slug}`;
@@ -52,9 +58,9 @@ export function ArticleCard({
         />
       )}
       <div className="media-scrim absolute inset-0 -z-10" />
-      {isVideo && (
-        <span className="absolute right-4 top-4 inline-flex size-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-md">
-          <Play className="ml-0.5 size-4 fill-current" aria-hidden />
+      {number !== undefined && (
+        <span className="absolute left-5 top-4 text-[2.5rem] font-extrabold leading-none tabular-nums drop-shadow-[0_2px_12px_rgb(0_0_0/0.45)]" aria-hidden>
+          {String(number).padStart(2, "0")}
         </span>
       )}
       <div className={cn("p-5", hero && "sm:p-8")}>

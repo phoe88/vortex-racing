@@ -128,7 +128,7 @@ export default async function DriverPage({ params }: PageProps<"/team/[slug]">) 
 
       {stories.length > 0 && (
         <Carousel title={`${driver.first_name} in the News`} className="mt-24 sm:mt-32">
-          {stories.map((a) => <ArticleCard key={a.id} article={a} />)}
+          {stories.map((a, i) => <ArticleCard key={a.id} article={a} number={i + 1} />)}
         </Carousel>
       )}
     </>

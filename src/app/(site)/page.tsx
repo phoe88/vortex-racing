@@ -105,7 +105,7 @@ export default async function HomePage() {
       {/* ─── Latest news rail ─────────────────────────────────────────── */}
       {railStories.length > 0 && (
         <Carousel title="Latest News" className="mt-24 sm:mt-32">
-          {railStories.map((a) => <ArticleCard key={a.id} article={a} />)}
+          {railStories.map((a, i) => <ArticleCard key={a.id} article={a} number={i + 1} />)}
         </Carousel>
       )}
 
