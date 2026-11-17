@@ -7,7 +7,7 @@ export const partnerSchema = z
     name: f.text(120),
     slug: f.optText(120),
     tier: f.enumOf(["title", "principal", "official", "supplier"]),
-    logo_url: f.url(),
+    logo_url: f.image(),
     website_url: f.url(),
     description: f.textDefault(2000),
     sort_order: f.int(),

@@ -44,7 +44,7 @@ pnpm dev                   # http://localhost:3000
 ## 2. Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. Open **SQL Editor** and run [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql). It creates every table, enum, trigger, Row Level Security policy and the public `media` storage bucket with staff-only write policies.
+2. Open **SQL Editor** and run the files in [`supabase/migrations`](supabase/migrations) in order, starting with `0001_init.sql`. It creates every table, enum, trigger, Row Level Security policy and the public `media` storage bucket with staff-only write policies; later files add columns.
 3. Seed demo content and your admin user:
 
    ```bash
@@ -105,7 +105,7 @@ src/
   config/site.ts  brand, navigation, season
   types/          Database schema types + domain types
   proxy.ts        auth gate for /admin (Next 16 “proxy”, formerly middleware)
-supabase/migrations/0001_init.sql   schema, RLS, storage policies
+supabase/migrations/               schema, RLS, storage policies (run in order)
 scripts/seed.ts                     pnpm seed
 ```
 

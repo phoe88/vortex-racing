@@ -9,7 +9,7 @@ export const articleSchema = z
     excerpt: f.textDefault(600),
     body: f.textDefault(100_000),
     category: f.enumOf(["news", "race-report", "feature", "video", "partner", "team"]),
-    cover_image_url: f.url(),
+    cover_image_url: f.image(),
     video_url: f.url(),
     author_name: f.textDefault(120),
     tags: f.tags(),

@@ -49,9 +49,9 @@ export function DriverCard({
       )}
     >
       <div className="relative isolate flex aspect-[3/4] flex-col justify-end overflow-hidden rounded-xl bg-navy-raised p-5">
-        {driver.image_url && (
+        {(driver.card_image_url ?? driver.image_url) && (
           <Image
-            src={driver.image_url}
+            src={(driver.card_image_url ?? driver.image_url)!}
             alt={`${driver.first_name} ${driver.last_name}`}
             fill
             priority={priority}

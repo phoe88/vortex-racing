@@ -16,7 +16,13 @@ export const f = {
   text: (max = 500) => z.string().trim().min(1, "Required").max(max),
   optText: (max = 5000) => z.preprocess((v) => (empty(v) ? null : v), z.string().trim().max(max).nullable()),
   textDefault: (max = 20000) => z.preprocess((v) => (empty(v) ? "" : v), z.string().trim().max(max)),
-  url: () => z.preprocess((v) => (empty(v) ? null : v), z.url("Must be a valid URL").max(2000).nullable()),
+  url: () => z.preprocess((v) => (empty(v) ? null : v), z.url({ protocol: /^https?$/, error: "Must be a valid http(s) URL" }).max(2000).nullable()),
+  /** Image location: a full URL, or a path to a file in /public such as "/images/drivers/x.webp". */
+  image: () =>
+    z.preprocess(
+      (v) => (empty(v) ? null : v),
+      z.union([z.url({ protocol: /^https?$/ }), z.string().regex(/^\/(?!\/)\S+$/)], { error: "Must be a full URL or a site path starting with /" }).pipe(z.string().max(2000)).nullable(),
+    ),
   int: () => z.coerce.number().int(),
   optInt: () => z.preprocess((v) => (empty(v) ? null : Number(v)), z.number().int().nullable()),
   num: () => z.coerce.number(),

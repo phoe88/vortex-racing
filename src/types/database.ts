@@ -63,6 +63,8 @@ export type DriverRow = Timestamps & {
   date_of_birth: string | null;
   place_of_birth: string | null;
   image_url: string | null;
+  /** Photo for driver cards; falls back to image_url. */
+  card_image_url: string | null;
   hero_image_url: string | null;
   helmet_image_url: string | null;
   instagram_url: string | null;
@@ -257,7 +259,7 @@ export type Database = {
         InsertOf<
           DriverRow,
           | "number" | "nationality" | "country_code" | "role" | "tagline" | "bio"
-          | "date_of_birth" | "place_of_birth" | "image_url" | "hero_image_url"
+          | "date_of_birth" | "place_of_birth" | "image_url" | "card_image_url" | "hero_image_url"
           | "helmet_image_url" | "instagram_url" | "x_url" | "career_starts"
           | "career_wins" | "career_podiums" | "career_poles" | "career_points"
           | "championships" | "is_active" | "sort_order"
