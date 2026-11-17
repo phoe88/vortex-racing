@@ -39,7 +39,7 @@ Away from the track he restores vintage motorcycles and is a vocal supporter of 
   },
   {
     id: uid("d0000000", 2), slug: "kai-nakamura", first_name: "Kai", last_name: "Nakamura",
-    number: 81, nationality: "Japanese", country_code: "JP", role: "race",
+    number: 30, nationality: "Japanese", country_code: "JP", role: "race",
     tagline: "Precision is a habit.",
     bio: `Kai Nakamura graduated from the Vortex Academy in 2025, becoming the first driver to progress from the team's junior programme to a full-time race seat. He won the 2024 Formula 3 title at his first attempt, then finished third in Formula 2 while juggling simulator duties for the senior team.
 
