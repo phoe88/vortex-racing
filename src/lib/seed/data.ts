@@ -476,7 +476,7 @@ Moretti sits second in the Drivers' standings. With three races left, every poin
     excerpt: "Onboard with commentary from the man himself on the lap that won the 2025 Monaco Grand Prix.",
     category: "video", tags: ["Video", "Monaco", "Onboard"],
     cover_image_url: unsplash(IMG.glovesWheel, 1800), published_at: "2026-06-03T16:00:00Z",
-    video_url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    video_url: "https://www.youtube.com/watch?v=Aw0L44rj364",
     body: `Ahead of this year's Monaco Grand Prix, Luca Moretti talks us through his pole lap from 2025, corner by corner. From the commitment through Casino Square to the "hold your breath" moment at the Swimming Pool, this is what a lap of the Principality feels like from the cockpit.`,
   },
   {
