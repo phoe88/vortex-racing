@@ -343,7 +343,7 @@ const ARTICLES: ArticleSeed[] = [
     title: "Moretti holds off Reyes for a rain-soaked São Paulo podium",
     excerpt: "A late switch to intermediates and 14 laps of defending gave Luca Moretti his seventh podium of the season at Interlagos.",
     category: "race-report", tags: ["Interlagos", "Luca Moretti", "Race report"], is_featured: true,
-    cover_image_url: unsplash(IMG.heroPanning, 1800), published_at: "2026-11-08T21:30:00Z",
+    cover_image_url: "/images/news/moretti-sao-paulo-podium.webp", published_at: "2026-11-08T21:30:00Z",
     body: `Interlagos delivered, as it always does. After a dry opening stint that saw Luca Moretti run a comfortable fourth, the rain arrived on lap 44 and turned the São Paulo Grand Prix into a strategy lottery.
 
 ## The call
@@ -371,7 +371,7 @@ The team leaves Brazil second in the Constructors' standings with three rounds r
     title: "Inside the VR-26 floor upgrade that changed our season",
     excerpt: "Technical Director Daniel Okafor on the Barcelona package, why it took eleven weeks to build and what it unlocked in the car.",
     category: "feature", tags: ["Technology", "VR-26", "Aerodynamics"],
-    cover_image_url: unsplash(IMG.garageRear, 1800), published_at: "2026-10-30T10:00:00Z",
+    cover_image_url: "/images/news/vr-26-floor-upgrade.webp", published_at: "2026-10-30T10:00:00Z",
     body: `When the VR-26 rolled out at pre-season testing it was already a good car. What arrived in Barcelona in June made it a contender. Daniel Okafor sat down with us to explain the biggest upgrade the team has ever brought to a single race.
 
 ## The problem
@@ -441,7 +441,7 @@ The expanded agreement moves the team's entire simulation workload onto Halcyon 
     title: "1.92 seconds: how the crew set a new team pit-stop record",
     excerpt: "A frame-by-frame breakdown of the British Grand Prix stop that gained Moretti track position.",
     category: "feature", tags: ["Pit crew", "Silverstone"],
-    cover_image_url: unsplash(IMG.pitStop, 1800), published_at: "2026-07-08T10:00:00Z",
+    cover_image_url: "/images/news/pit-stop-record.webp", published_at: "2026-07-08T10:00:00Z",
     body: `Twenty-two people, four wheels, 1.92 seconds. The stop on lap 31 of the British Grand Prix was the fastest in the team's history and the one that put Luca Moretti ahead of Oliver Hart for the final stint.
 
 ## The breakdown
@@ -459,7 +459,7 @@ The expanded agreement moves the team's entire simulation workload onto Halcyon 
     title: "Las Vegas preview: cold tyres, long straights and a title fight",
     excerpt: "Everything you need to know before the lights go out on the Strip.",
     category: "news", tags: ["Las Vegas", "Preview"],
-    cover_image_url: unsplash(IMG.sunsetStadium, 1800), published_at: "2026-11-14T12:00:00Z",
+    cover_image_url: "/images/news/las-vegas-preview.webp", published_at: "2026-11-14T12:00:00Z",
     body: `The Las Vegas Strip Circuit is unlike anything else on the calendar: a 6.2 km night race in track temperatures that can fall into single digits. Tyre warm-up will decide qualifying and the first lap of every stint.
 
 ## Our approach

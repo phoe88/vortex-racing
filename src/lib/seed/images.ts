@@ -7,7 +7,6 @@ export function unsplash(id: string, w = 1600) {
 }
 
 export const IMG = {
-  heroPanning: "1699138346782-8a8b211c3da2",
   gridLineup: "1659203206829-218b9b5930e5",
   darkCar: "1614949194403-9602bdc14a3a",
   yellowCar: "1610905376670-5e7e0e8a3cfb",
@@ -28,7 +27,6 @@ export const IMG = {
   driverInCar: "1552255440-ac1fa0a5b2a3",
   garageSilhouettes: "1765202661219-cec5ad98f324",
   garageCrew: "1765202662641-d22f5a214d51",
-  pitStop: "1783888532524-b1d7f6a649c0",
   pitCrewDark: "1771425105292-bb2737097d5a",
   pitLaneCrowd: "1761044975589-3972343a9958",
   monaco: "1786609852224-7abde72482c5",
