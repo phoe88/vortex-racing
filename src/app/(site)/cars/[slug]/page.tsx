@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getCarBySlug, getCarSlugs, getCars } from "@/features/cars/queries";
 import { getDrivers } from "@/features/drivers/queries";
 import { CarName, CarShowcase } from "@/components/shared/car-showcase";
+import { Carousel } from "@/components/ui/carousel";
 import { Reveal } from "@/components/ui/reveal";
 
 export async function generateStaticParams() {
@@ -71,13 +72,11 @@ export default async function CarPage({ params }: PageProps<"/cars/[slug]">) {
 
       {/* In numbers rail */}
       {numeric.length > 0 && (
-        <section className="mt-24 sm:mt-32">
-          <h2 className="container-x type-heading-medium">The {car.name} in numbers</h2>
-          <div className="scrollbar-none mt-6 flex gap-3 overflow-x-auto px-4 sm:px-6 lg:px-10">
+        <Carousel title={`The ${car.name} in numbers`} titleClassName="type-heading-medium" itemClassName="" gap="gap-3" className="mt-24 sm:mt-32">
             {numeric.map((s) => {
               const [n, unit] = splitValue(s.value);
               return (
-                <div key={s.label} className="card shrink-0 px-5 py-4">
+                <div key={s.label} className="card px-5 py-4">
                   <p className="text-xs font-medium uppercase tracking-[0.12em]">{s.label}</p>
                   <p className="mt-2 whitespace-nowrap">
                     <span className="type-metric-large">{n}</span>
@@ -86,8 +85,7 @@ export default async function CarPage({ params }: PageProps<"/cars/[slug]">) {
                 </div>
               );
             })}
-          </div>
-        </section>
+        </Carousel>
       )}
 
       {/* Full specification */}

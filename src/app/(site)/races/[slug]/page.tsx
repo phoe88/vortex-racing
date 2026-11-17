@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getRaceBySlug, getRaceSlugs, getRaces } from "@/features/races/queries";
 import { Countdown } from "@/components/shared/countdown";
 import { RaceCard, raceStatus, raceWeekendRange } from "@/components/shared/race-card";
+import { Carousel } from "@/components/ui/carousel";
 import { Lozenge } from "@/components/ui/lozenge";
 import { Reveal } from "@/components/ui/reveal";
 import { cn, flagEmoji, formatPoints, formatTime } from "@/lib/utils";
@@ -73,11 +74,9 @@ export default async function RacePage({ params }: PageProps<"/races/[slug]">) {
       </section>
 
       {/* Circuit in numbers */}
-      <section className="mt-20">
-        <h2 className="container-x type-heading-medium">{race.circuit_name} in numbers</h2>
-        <div className="scrollbar-none mt-6 flex gap-3 overflow-x-auto px-4 sm:px-6 lg:px-10">
+      <Carousel title={`${race.circuit_name} in numbers`} titleClassName="type-heading-medium" itemClassName="" gap="gap-3" className="mt-20">
           {facts.map((f) => (
-            <div key={f.label} className="card shrink-0 px-5 py-4">
+            <div key={f.label} className="card px-5 py-4">
               <p className="text-xs font-medium uppercase tracking-[0.12em]">{f.label}</p>
               <p className="mt-2 whitespace-nowrap">
                 <span className="type-metric-large">{f.value}</span>
@@ -85,8 +84,7 @@ export default async function RacePage({ params }: PageProps<"/races/[slug]">) {
               </p>
             </div>
           ))}
-        </div>
-      </section>
+      </Carousel>
 
       <section className="container-x mt-20 grid gap-12 lg:grid-cols-[1.4fr_1fr]">
         <Reveal>

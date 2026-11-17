@@ -398,6 +398,15 @@
   @media (min-width: 1024px) { padding-inline: 2.5rem; }
 }
 
+/* Horizontal padding that lines a full-width scroll rail up with container-x content. */
+@utility rail-x {
+  --rail-gutter: 1rem;
+  @media (min-width: 640px) { --rail-gutter: 1.5rem; }
+  @media (min-width: 1024px) { --rail-gutter: 2.5rem; }
+  padding-inline: max(var(--rail-gutter), calc((100% - 90rem) / 2 + var(--rail-gutter)));
+  scroll-padding-inline: max(var(--rail-gutter), calc((100% - 90rem) / 2 + var(--rail-gutter)));
+}
+
 @utility scrollbar-none {
   scrollbar-width: none;
   &::-webkit-scrollbar { display: none; }
