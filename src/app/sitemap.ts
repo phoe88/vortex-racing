@@ -4,6 +4,7 @@ import { getArticles } from "@/features/news/queries";
 import { getDrivers } from "@/features/drivers/queries";
 import { getRaces } from "@/features/races/queries";
 import { getCars } from "@/features/cars/queries";
+import { PERKS } from "@/features/paddock/content";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = getSiteUrl();
@@ -14,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getCars(),
   ]);
 
-  const statics: MetadataRoute.Sitemap = ["", "/news", "/team", "/races", "/cars", "/standings", "/partners", "/newsletter"].map((p) => ({
+  const statics: MetadataRoute.Sitemap = ["", "/news", "/team", "/races", "/cars", "/standings", "/partners", "/newsletter", "/paddock", ...PERKS.map((p) => `/paddock/${p.slug}`)].map((p) => ({
     url: `${base}${p}`,
     changeFrequency: p === "" || p === "/news" ? "daily" : "weekly",
     priority: p === "" ? 1 : 0.7,

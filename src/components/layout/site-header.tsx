@@ -10,7 +10,7 @@ import { Button, buttonClass } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const headerLinks = [...siteConfig.nav.filter((n) => n.href !== "/partners"), { label: "Newsletter", href: "/newsletter" }];
-const menuLinks = [...siteConfig.nav, { label: "Newsletter", href: "/newsletter" }, { label: "Team login", href: "/admin" }];
+const menuLinks = [...siteConfig.nav, { label: "Paddock Pass", href: "/paddock" }, { label: "Newsletter", href: "/newsletter" }, { label: "Team login", href: "/admin" }];
 
 /**
  * Top navigation. It floats over the page: transparent at the top, a frosted

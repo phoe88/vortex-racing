@@ -33,6 +33,7 @@ export const siteConfig = {
       { label: "Cars", href: "/cars" },
       { label: "Partners", href: "/partners" },
       { label: "Newsletter", href: "/newsletter" },
+      { label: "Paddock Pass", href: "/paddock" },
     ],
     Racing: [
       { label: "Calendar", href: "/races" },

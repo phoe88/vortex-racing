@@ -1,13 +1,17 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { siteConfig } from "@/config/site";
+import { PERKS } from "@/features/paddock/content";
 import { NewsletterForm } from "@/components/shared/newsletter-form";
 import { InstagramIcon, XIcon, YoutubeIcon } from "@/components/shared/social-icons";
 import { Reveal } from "@/components/ui/reveal";
 import { buttonClass } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const PERKS = ["Race previews", "Team debriefs", "Exclusive content", "Behind the scenes"];
-
-/** Full-width sign-up section on a red glow: big headline, email field, socials and the perks of joining. */
+/**
+ * Full-width sign-up section on a red glow: big headline, email field, socials
+ * and the benefits of joining, each linking to its own page.
+ */
 export function NewsletterBlock({ source, as: Heading = "h2", className }: { source: string; as?: "h1" | "h2"; className?: string }) {
   return (
     <section className={cn("red-glow relative overflow-hidden py-24 sm:py-32 lg:py-40", className)}>
@@ -29,9 +33,14 @@ export function NewsletterBlock({ source, as: Heading = "h2", className }: { sou
           </div>
         </Reveal>
         <Reveal delay={0.1}>
-          <ul className="space-y-1">
+          <ul className="space-y-1" aria-label="Paddock Pass benefits">
             {PERKS.map((p) => (
-              <li key={p} className="type-heading-xxlarge">{p}</li>
+              <li key={p.slug}>
+                <Link href={`/paddock/${p.slug}`} className="type-heading-xxlarge group inline-flex items-center gap-4 transition-colors hover:text-subtle">
+                  {p.title}
+                  <ArrowRight className="size-8 shrink-0 -translate-x-2 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100 sm:size-10" aria-hidden />
+                </Link>
+              </li>
             ))}
           </ul>
         </Reveal>
