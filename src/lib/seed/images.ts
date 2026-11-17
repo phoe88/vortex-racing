@@ -10,7 +10,6 @@ export const IMG = {
   heroPanning: "1699138346782-8a8b211c3da2",
   gridLineup: "1659203206829-218b9b5930e5",
   darkCar: "1614949194403-9602bdc14a3a",
-  donuts: "1728116693268-125c5d6ad9e2",
   yellowCar: "1610905376670-5e7e0e8a3cfb",
   redYellowCar: "1632726144626-6f6a8876e35d",
   crowdBlur: "1744841332448-f4a2d6011202",

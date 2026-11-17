@@ -395,7 +395,7 @@ Since Barcelona, Moretti and Nakamura have scored 73 per cent of the team's poin
     title: "Nakamura wins at home: a first victory at Suzuka",
     excerpt: "From pole to flag, Kai Nakamura became the first Japanese driver to win at Suzuka for Vortex Racing.",
     category: "race-report", tags: ["Suzuka", "Kai Nakamura", "Win"],
-    cover_image_url: unsplash(IMG.donuts, 1800), published_at: "2026-03-29T09:30:00Z",
+    cover_image_url: "/images/news/nakamura-suzuka-win.webp", published_at: "2026-03-29T09:30:00Z",
     body: `Kai Nakamura led every lap of the Japanese Grand Prix to take his first win in only his third start for the team, in front of a crowd that had been chanting his name since Friday practice.
 
 ## Pole and control
