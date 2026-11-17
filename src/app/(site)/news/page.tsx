@@ -22,7 +22,7 @@ export default function NewsPage({ searchParams }: PageProps<"/news">) {
   return (
     <>
       <PageHero eyebrow="Newsroom" title="News & stories" description="Race reports, technical features, team announcements and videos from inside the garage." />
-      <div className="container-x pb-16">
+      <div className="container-x">
         <Suspense fallback={<CardGridSkeleton count={6} />}>
           <NewsList searchParams={searchParams} />
         </Suspense>
@@ -46,16 +46,18 @@ async function NewsList({ searchParams }: { searchParams: PageProps<"/news">["se
 
   return (
     <>
-      <nav aria-label="Categories" className="mb-10 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+      {/* Category tabs */}
+      <nav aria-label="Categories" className="scrollbar-none mb-6 flex gap-1 overflow-x-auto border-b-2">
         {[{ value: null, label: "All" }, ...ARTICLE_CATEGORIES].map((c) => {
           const active = c.value === category;
           return (
             <Link
               key={c.label}
               href={c.value ? `/news?category=${c.value}` : "/news"}
+              aria-current={active ? "page" : undefined}
               className={cn(
-                "shrink-0 rounded-full border px-4 py-2 font-display text-sm font-semibold uppercase tracking-[0.12em] transition",
-                active ? "border-accent bg-accent text-white" : "border-white/15 text-ice/80 hover:border-white/40",
+                "-mb-0.5 shrink-0 border-b-2 px-2 py-2 text-sm font-medium transition-colors -outline-offset-2",
+                active ? "border-selected text-selected" : "border-transparent text-subtle hover:border-bold hover:text-default",
               )}
             >
               {c.label}
@@ -64,11 +66,11 @@ async function NewsList({ searchParams }: { searchParams: PageProps<"/news">["se
         })}
       </nav>
       {articles.length === 0 ? (
-        <p className="py-20 text-center text-muted">No stories in this category yet.</p>
+        <p className="py-16 text-center text-sm text-subtle">No stories in this category yet.</p>
       ) : (
-        <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
           {articles.map((a, i) => (
-            <ArticleCard key={a.id} article={a} variant={i === 0 && page === 1 ? "overlay" : "default"} className={i === 0 && page === 1 ? "sm:col-span-2 lg:col-span-3 lg:aspect-[21/9]" : undefined} />
+            <ArticleCard key={a.id} article={a} variant={i === 0 && page === 1 ? "hero" : "default"} priority={i === 0 && page === 1} className={i === 0 && page === 1 ? "sm:col-span-2 lg:col-span-3" : undefined} />
           ))}
         </div>
       )}

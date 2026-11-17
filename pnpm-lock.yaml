@@ -209,6 +209,9 @@ importers:
         specifier: ^4.6.7
         version: 4.6.7
     devDependencies:
+      '@atlaskit/tokens':
+        specifier: ^20.12.0
+        version: 20.12.0(react@19.3.0)(supports-color@7.2.0)
       '@tailwindcss/turbopack':
         specifier: 4.3.3
         version: 4.3.3
@@ -245,6 +248,33 @@ packages:
   '@alloc/quick-lru@5.3.0':
     resolution: {integrity: sha512-U4+70Pc5ZS9osnCBCE5Jha/ciHM+Yp+CNMNC/7HvYbNRk1Ldd+f7qO65W5qfhu/TCv+/ozljlXXe9Nj8419DMA==}
     engines: {node: '>=10'}
+
+  '@atlaskit/atlassian-context@2.0.0':
+    resolution: {integrity: sha512-RfdonD91GCqMo6a4nZlg3ZkKrHV4OcEkxVe/4J0aPkLk4R0rRZfcckvQxv0hou3JziNibIv4ou9naK6bt/Y09g==}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0
+
+  '@atlaskit/ds-lib@8.0.1':
+    resolution: {integrity: sha512-kvuOp8D4CMMd82zK/BJztOKl18UZeZwpdWds5Mhy1FFhvHiMqFU0vzIcE4J5vL2Fz4UYPjkOce4bAFvBsYV8WQ==}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0
+
+  '@atlaskit/feature-gate-js-client@8.0.0':
+    resolution: {integrity: sha512-K6ib83R3AROC/Jmgpru9ku3S6CUwloO1yoOY915/gAcPnAI2bGcMetUwmZGVXdw+/Ravfy6lxgZQsN2GUHJraQ==}
+
+  '@atlaskit/flag-client@1.1.0':
+    resolution: {integrity: sha512-0DmiFU9Wsc0bHEzMb5NXRU5+kT+fYQxW7Km9xS7THak8MvzKrclZhoqN5Xyo4F6BymqMS/s7eukbaDsiRPH2qg==}
+
+  '@atlaskit/platform-feature-flags@2.2.2':
+    resolution: {integrity: sha512-2vVqXpUH2qW2bAAetiT7eOT5gu3cvyg0RNRknTSASlN7hGD3zJc5lcc28GC7f9ayy2DdteRoG7teiSKrinU1jw==}
+
+  '@atlaskit/react-compiler-gating@0.2.7':
+    resolution: {integrity: sha512-aOcVwX7le2FX92NmSfvvyMEierigp9O/rYNy/M+1ablnRRq1osP/drquGBPuDRHjnq0dddNWYVR4VxhF54Dtqg==}
+
+  '@atlaskit/tokens@20.12.0':
+    resolution: {integrity: sha512-Z2CRo5p3H/Ydcf4pwnxHGjDPw4EAMGG0Kr0ZszAlsRpEXNernNIo3RT0SjUmIwrUbjLWAz8hEA8i5QQKG23P4Q==}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0
 
   '@babel/code-frame@7.29.7':
     resolution: {integrity: sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw==}
@@ -300,6 +330,10 @@ packages:
     resolution: {integrity: sha512-VL220vXuyO2z3rNIQwY7ftj9UwpqOt+33sH+sBWkOekbsSR2g7EEMnOx24ZlCH0xOA3DM/33SifVFGbnJD8r/w==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+
+  '@babel/runtime@7.29.14':
+    resolution: {integrity: sha512-Y5tqevQaUAZhhj82BpYMNC1ssvLQTVAfwKdm8iy8qwmhvC2/CpcAu8OC+QEtjM7pMk7knx83u1Qj8gzkicyelw==}
+    engines: {node: '>=6.9.0'}
 
   '@babel/template@7.29.7':
     resolution: {integrity: sha512-puq+Gf35oI24FeN11LkoUQFqv9uwNeWpxXZi/Ji3rRIoKAzKnxRaZ+Gkj0vKS9ZCiTESfng1N9LyOyXvo+m+Gg==}
@@ -791,6 +825,12 @@ packages:
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
 
+  '@statsig/client-core@3.30.2':
+    resolution: {integrity: sha512-F3u1+LDml6IFz/tMbSYI0pEOMR13OHM71lLJ3RuoWpK2KpCwfsHpt7kBmUKJxUXZ05CP/jWgmhG/ROj7eqDCPQ==}
+
+  '@statsig/js-client@3.30.2':
+    resolution: {integrity: sha512-Cjs4uzyAxt1sw44oa6qSNWuZdO11jmgrpOVBC2NajtpA55GBmAfjZ3vQdXizUffUZMRmFiEpGwxi9zmjFEG7Sw==}
+
   '@supabase/auth-js@2.119.0':
     resolution: {integrity: sha512-WI7KqJRxqZjm77PlRO/VfKretL4SG8g8stWfBmpyx9To+fFapZlSbXA8QkduoMvr72rRpIF24ZLrjktBrp+ZFA==}
     engines: {node: '>=22.0.0'}
@@ -1259,6 +1299,9 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  bind-event-listener@3.0.0:
+    resolution: {integrity: sha512-PJvH288AWQhKs2v9zyfYdPzlPqf5bXbGMmhmUIY9x4dAUGIWgomO771oBQNwJnMQSnUIXhKu6sgzpBRXTlvb8Q==}
+
   brace-expansion@1.1.22:
     resolution: {integrity: sha512-CKLDTuSsN0+r1ThM0WkzzBI7dnPI6xEGfa/JnVYIK9JNBA1N1NyPwXVHor//NKD/y3sDxp764sZdLhFK7pH8XQ==}
 
@@ -1565,6 +1608,9 @@ packages:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
 
+  eventemitter3@4.0.7:
+    resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
+
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
 
@@ -1714,6 +1760,9 @@ packages:
   has-tostringtag@1.0.2:
     resolution: {integrity: sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw==}
     engines: {node: '>= 0.4'}
+
+  hash-wasm@4.13.0:
+    resolution: {integrity: sha512-GrWl7wsV46fKIXQZB5ebskLZLAmKL6d9RS0fspCxDeQyjoNu1AfTJTMLPOJyfzaQm0ldFiwFN21/w+sE/kgEFQ==}
 
   hasown@2.0.4:
     resolution: {integrity: sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==}
@@ -2382,6 +2431,9 @@ packages:
     resolution: {integrity: sha512-NHFiWnAbMJxNNpBwiO7jJVGDuqMxT9/oV8v57RR+fgBQShkJil5inGD8/xWy0hjLyHQyX1tu27QANhlz3KBqCg==}
     engines: {node: '>=6'}
 
+  tiny-invariant@1.3.3:
+    resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
+
   tinyglobby@0.2.17:
     resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
     engines: {node: '>=12.0.0'}
@@ -2506,6 +2558,61 @@ snapshots:
 
   '@alloc/quick-lru@5.3.0': {}
 
+  '@atlaskit/atlassian-context@2.0.0(react@19.3.0)':
+    dependencies:
+      '@babel/runtime': 7.29.14
+      react: 19.3.0
+
+  '@atlaskit/ds-lib@8.0.1(react@19.3.0)':
+    dependencies:
+      '@babel/runtime': 7.29.14
+      bind-event-listener: 3.0.0
+      react: 19.3.0
+      tiny-invariant: 1.3.3
+
+  '@atlaskit/feature-gate-js-client@8.0.0(react@19.3.0)':
+    dependencies:
+      '@atlaskit/atlassian-context': 2.0.0(react@19.3.0)
+      '@atlaskit/flag-client': 1.1.0
+      '@babel/runtime': 7.29.14
+      '@statsig/client-core': 3.30.2
+      '@statsig/js-client': 3.30.2
+      eventemitter3: 4.0.7
+    transitivePeerDependencies:
+      - react
+
+  '@atlaskit/flag-client@1.1.0':
+    dependencies:
+      '@babel/runtime': 7.29.14
+      hash-wasm: 4.13.0
+
+  '@atlaskit/platform-feature-flags@2.2.2(react@19.3.0)':
+    dependencies:
+      '@atlaskit/feature-gate-js-client': 8.0.0(react@19.3.0)
+      '@babel/runtime': 7.29.14
+    transitivePeerDependencies:
+      - react
+
+  '@atlaskit/react-compiler-gating@0.2.7(react@19.3.0)':
+    dependencies:
+      '@atlaskit/feature-gate-js-client': 8.0.0(react@19.3.0)
+      '@babel/runtime': 7.29.14
+    transitivePeerDependencies:
+      - react
+
+  '@atlaskit/tokens@20.12.0(react@19.3.0)(supports-color@7.2.0)':
+    dependencies:
+      '@atlaskit/ds-lib': 8.0.1(react@19.3.0)
+      '@atlaskit/platform-feature-flags': 2.2.2(react@19.3.0)
+      '@atlaskit/react-compiler-gating': 0.2.7(react@19.3.0)
+      '@babel/runtime': 7.29.14
+      '@babel/traverse': 7.29.14(supports-color@7.2.0)
+      '@babel/types': 7.29.14
+      bind-event-listener: 3.0.0
+      react: 19.3.0
+    transitivePeerDependencies:
+      - supports-color
+
   '@babel/code-frame@7.29.7':
     dependencies:
       '@babel/helper-validator-identifier': 7.29.7
@@ -2582,6 +2689,8 @@ snapshots:
   '@babel/parser@7.29.14':
     dependencies:
       '@babel/types': 7.29.14
+
+  '@babel/runtime@7.29.14': {}
 
   '@babel/template@7.29.7':
     dependencies:
@@ -2930,6 +3039,12 @@ snapshots:
   '@nolyfill/is-core-module@1.0.39': {}
 
   '@rtsao/scc@1.1.0': {}
+
+  '@statsig/client-core@3.30.2': {}
+
+  '@statsig/js-client@3.30.2':
+    dependencies:
+      '@statsig/client-core': 3.30.2
 
   '@supabase/auth-js@2.119.0':
     dependencies:
@@ -3327,6 +3442,8 @@ snapshots:
   balanced-match@4.0.4: {}
 
   baseline-browser-mapping@2.11.37: {}
+
+  bind-event-listener@3.0.0: {}
 
   brace-expansion@1.1.22:
     dependencies:
@@ -3815,6 +3932,8 @@ snapshots:
 
   esutils@2.0.3: {}
 
+  eventemitter3@4.0.7: {}
+
   fast-deep-equal@3.1.3: {}
 
   fast-glob@3.3.1:
@@ -3959,6 +4078,8 @@ snapshots:
   has-tostringtag@1.0.2:
     dependencies:
       has-symbols: 1.1.0
+
+  hash-wasm@4.13.0: {}
 
   hasown@2.0.4:
     dependencies:
@@ -4657,6 +4778,8 @@ snapshots:
   tailwindcss@4.3.3: {}
 
   tapable@2.3.4: {}
+
+  tiny-invariant@1.3.3: {}
 
   tinyglobby@0.2.17:
     dependencies:

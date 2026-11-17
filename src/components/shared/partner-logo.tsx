@@ -4,40 +4,33 @@ import type { Partner } from "@/types";
 
 /** Renders a partner logo, or a typographic wordmark when no logo is set. */
 export function PartnerLogo({ partner, className, size = "md" }: { partner: Partner; className?: string; size?: "sm" | "md" | "lg" }) {
-  const h = size === "lg" ? "h-14" : size === "sm" ? "h-7" : "h-10";
+  const h = size === "lg" ? "h-12" : size === "sm" ? "h-6" : "h-8";
   const inner = partner.logo_url ? (
     <Image src={partner.logo_url} alt={partner.name} width={200} height={64} className={cn("w-auto object-contain", h)} />
   ) : (
-    <span
-      className={cn(
-        "font-display font-extrabold uppercase italic tracking-tight text-ice/80",
-        size === "lg" ? "text-3xl" : size === "sm" ? "text-base" : "text-xl",
-      )}
-    >
+    <span className={cn("whitespace-nowrap", size === "lg" ? "type-heading-large" : size === "sm" ? "type-heading-xsmall" : "type-heading-medium")}>
       {partner.name}
     </span>
   );
   if (partner.website_url) {
     return (
-      <a href={partner.website_url} target="_blank" rel="noopener noreferrer sponsored" className={cn("inline-flex items-center opacity-80 transition hover:opacity-100", className)} aria-label={partner.name}>
+      <a href={partner.website_url} target="_blank" rel="noopener noreferrer sponsored" className={cn("inline-flex items-center rounded-sm text-subtle transition-colors hover:text-default", className)} aria-label={partner.name}>
         {inner}
       </a>
     );
   }
-  return <span className={cn("inline-flex items-center opacity-80", className)}>{inner}</span>;
+  return <span className={cn("inline-flex items-center text-subtle", className)}>{inner}</span>;
 }
 
-export function PartnerMarquee({ partners }: { partners: Partner[] }) {
-  const items = [...partners, ...partners];
+/** A quiet row of partner names shown under the home page hero. */
+export function PartnerStrip({ partners }: { partners: Partner[] }) {
   return (
-    <div className="relative overflow-hidden border-y border-line py-6" aria-label="Team partners">
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-night to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-night to-transparent" />
-      <div className="flex w-max animate-marquee items-center gap-16 px-8 hover:[animation-play-state:paused]">
-        {items.map((p, i) => (
-          <PartnerLogo key={`${p.id}-${i}`} partner={p} size="sm" />
+    <div className="border-y bg-surface-sunken" aria-label="Team partners">
+      <ul className="container-x flex flex-wrap items-center justify-center gap-x-8 gap-y-3 py-4">
+        {partners.map((p) => (
+          <li key={p.id}><PartnerLogo partner={p} size="sm" /></li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

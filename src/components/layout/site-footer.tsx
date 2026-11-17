@@ -4,16 +4,18 @@ import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/shared/logo";
 import { NewsletterForm } from "@/components/shared/newsletter-form";
 import { InstagramIcon, XIcon, YoutubeIcon } from "@/components/shared/social-icons";
+import { buttonClass } from "@/components/ui/button";
+
+const footerLink = "text-sm text-subtle hover:text-default hover:underline";
 
 export function SiteFooter() {
   return (
-    <footer className="relative mt-24 border-t border-line bg-navy/40">
-      <div className="racing-stripe h-1.5 w-full opacity-80" aria-hidden />
-      <div className="container-x grid gap-12 py-16 lg:grid-cols-[1.4fr_1fr_1fr_1.4fr]">
+    <footer className="mt-16 border-t bg-surface-sunken">
+      <div className="container-x grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.4fr]">
         <div>
           <Logo />
-          <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">{siteConfig.description}</p>
-          <div className="mt-6 flex items-center gap-2">
+          <p className="mt-3 max-w-sm text-sm text-subtle">{siteConfig.description}</p>
+          <div className="mt-4 flex items-center gap-1">
             {[
               { href: siteConfig.social.x, label: "X", Icon: XIcon },
               { href: siteConfig.social.instagram, label: "Instagram", Icon: InstagramIcon },
@@ -25,7 +27,7 @@ export function SiteFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="inline-flex size-10 items-center justify-center rounded-full border border-white/12 text-ice/80 transition hover:border-accent hover:text-white"
+                className={buttonClass({ appearance: "subtle", iconOnly: true })}
               >
                 <Icon className="size-4" />
               </a>
@@ -35,13 +37,11 @@ export function SiteFooter() {
 
         {Object.entries(siteConfig.footerNav).map(([group, links]) => (
           <div key={group}>
-            <p className="eyebrow mb-4">{group}</p>
-            <ul className="space-y-2.5">
+            <p className="type-heading-xxsmall mb-3 text-subtlest">{group}</p>
+            <ul className="space-y-2">
               {links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-sm text-ice/80 transition hover:text-accent-2">
-                    {l.label}
-                  </Link>
+                  <Link href={l.href} className={footerLink}>{l.label}</Link>
                 </li>
               ))}
             </ul>
@@ -49,17 +49,17 @@ export function SiteFooter() {
         ))}
 
         <div>
-          <p className="eyebrow mb-4">Paddock Pass</p>
-          <p className="mb-4 text-sm text-muted">Race previews, team news and behind-the-garage access, straight to your inbox.</p>
+          <p className="type-heading-xxsmall mb-3 text-subtlest">Paddock Pass</p>
+          <p className="mb-3 text-sm text-subtle">Race previews, team news and behind-the-garage access, straight to your inbox.</p>
           <NewsletterForm compact source="footer" />
         </div>
       </div>
-      <div className="border-t border-line">
-        <div className="container-x flex flex-col gap-3 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t">
+        <div className="container-x type-body-small flex flex-col gap-2 py-4 text-subtlest sm:flex-row sm:items-center sm:justify-between">
           <CopyrightLine />
-          <div className="flex gap-5">
-            <Link href="/admin" className="hover:text-ice">Team login</Link>
-            <a href="#top" className="hover:text-ice">Back to top ↑</a>
+          <div className="flex gap-4">
+            <Link href="/admin" className="hover:text-default hover:underline">Team login</Link>
+            <a href="#top" className="hover:text-default hover:underline">Back to top</a>
           </div>
         </div>
       </div>

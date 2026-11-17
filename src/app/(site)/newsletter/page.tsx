@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Check } from "lucide-react";
 import { NewsletterForm } from "@/components/shared/newsletter-form";
+import { darkSubtree } from "@/lib/theme";
 import { unsplash, IMG } from "@/lib/seed/images";
 import { siteConfig } from "@/config/site";
 
@@ -20,25 +21,27 @@ const perks = [
 
 export default function NewsletterPage() {
   return (
-    <section className="relative isolate min-h-screen overflow-hidden pt-32 pb-20 sm:pt-44">
-      <Image src={unsplash(IMG.garageHelmets, 2000)} alt="" fill priority sizes="100vw" className="-z-20 object-cover opacity-50" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-night via-night/85 to-night/40" />
-      <div className="container-x grid gap-12 lg:grid-cols-2 lg:items-center">
-        <div>
-          <p className="eyebrow mb-4 text-accent">Paddock Pass</p>
-          <h1 className="display text-5xl sm:text-6xl lg:text-7xl">Closer to the team than the grandstand</h1>
-          <p className="mt-6 max-w-lg text-lg text-ice/80">One email a week during the season, the occasional one in winter. Written by the people in the garage, not a marketing bot.</p>
-          <ul className="mt-8 space-y-3">
-            {perks.map((p) => (
-              <li key={p} className="flex items-start gap-3 text-ice/90"><Check className="mt-0.5 size-5 shrink-0 text-accent-2" /> {p}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="card p-6 sm:p-10">
-          <h2 className="display text-3xl">Sign up</h2>
-          <p className="mb-6 mt-2 text-sm text-muted">Free. Unsubscribe with one click.</p>
-          <NewsletterForm source="newsletter-page" />
-        </div>
+    <section className="container-x grid gap-4 pt-4 sm:pt-6 lg:grid-cols-[1.3fr_1fr]">
+      {/* Always dark so the text stays legible over the photograph. */}
+      <div
+        {...darkSubtree}
+        className="relative isolate flex min-h-96 flex-col justify-end overflow-hidden rounded-xl bg-surface-sunken p-4 text-default sm:p-8"
+      >
+        <Image src={unsplash(IMG.garageHelmets, 2000)} alt="" fill priority sizes="(min-width: 1024px) 60vw, 100vw" className="-z-20 object-cover" />
+        <div className="media-scrim-soft absolute inset-0 -z-10" />
+        <p className="type-heading-xxsmall mb-1 text-subtlest">Paddock Pass</p>
+        <h1 className="type-heading-xlarge sm:type-heading-xxlarge max-w-xl text-balance">Closer to the team than the grandstand</h1>
+        <p className="type-body-large mt-2 max-w-lg text-subtle">One email a week during the season, the occasional one in winter. Written by the people in the garage, not a marketing bot.</p>
+      </div>
+      <div className="card self-start p-4 sm:p-6">
+        <h2 className="type-heading-medium">Sign up</h2>
+        <p className="mb-4 mt-1 text-sm text-subtle">Free. Unsubscribe with one click.</p>
+        <NewsletterForm source="newsletter-page" />
+        <ul className="mt-6 space-y-2 border-t pt-4">
+          {perks.map((p) => (
+            <li key={p} className="flex items-start gap-2 text-sm"><Check className="mt-0.5 size-4 shrink-0 text-icon-success" aria-hidden /> {p}</li>
+          ))}
+        </ul>
       </div>
     </section>
   );

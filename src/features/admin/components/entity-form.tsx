@@ -1,8 +1,9 @@
 "use client";
-import Link from "next/link";
 import { useActionState } from "react";
-import { Loader2, Save } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { Button, ButtonLink } from "@/components/ui/button";
 import { Checkbox, Field, Input, Select, Textarea } from "@/components/ui/form";
+import { SectionMessage } from "@/components/ui/section-message";
 import { ImageField } from "./image-field";
 import type { ActionState } from "@/types";
 import { cn } from "@/lib/utils";
@@ -65,25 +66,25 @@ export function EntityForm({
   };
 
   return (
-    <form action={formAction} className={cn("space-y-8", className)} noValidate>
+    <form action={formAction} className={cn("space-y-4", className)} noValidate>
       {state && !state.ok && state.message && (
-        <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-sm text-red-300">{state.message}</div>
+        <SectionMessage appearance="error">{state.message}</SectionMessage>
       )}
       {state?.ok && state.message && (
-        <div className="rounded-lg border border-success/30 bg-success/10 px-4 py-2.5 text-sm text-success">{state.message}</div>
+        <SectionMessage appearance="success">{state.message}</SectionMessage>
       )}
       {sections.map((section) => (
-        <section key={section.title} className="card p-5 sm:p-6">
-          <h2 className="font-display text-lg font-bold uppercase tracking-wide">{section.title}</h2>
-          {section.description && <p className="mt-1 text-xs text-muted">{section.description}</p>}
-          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+        <section key={section.title} className="card p-4 sm:p-6">
+          <h2 className="type-heading-small">{section.title}</h2>
+          {section.description && <p className="type-body-small mt-1 text-subtle">{section.description}</p>}
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
             {section.fields.map((def) => {
               const id = `f-${def.name}`;
               const errors = state?.fieldErrors?.[def.name];
               const span = def.span === 2 || ["textarea", "markdown", "json", "image"].includes(def.type ?? "") ? "sm:col-span-2" : "";
               if (def.type === "checkbox") {
                 return (
-                  <div key={def.name} className={cn("flex items-center pt-6", span)}>
+                  <div key={def.name} className={cn("flex items-center pt-5", span)}>
                     <Checkbox name={def.name} label={def.label} defaultChecked={checkedOf(def)} />
                   </div>
                 );
@@ -91,7 +92,7 @@ export function EntityForm({
               return (
                 <Field key={def.name} label={def.required ? `${def.label} *` : def.label} htmlFor={id} hint={def.hint} errors={errors} className={span}>
                   {def.type === "textarea" || def.type === "markdown" || def.type === "json" ? (
-                    <Textarea id={id} name={def.name} defaultValue={valueOf(def)} rows={def.rows ?? (def.type === "markdown" ? 16 : def.type === "json" ? 8 : 4)} placeholder={def.placeholder} className={def.type === "json" ? "font-mono text-xs" : undefined} />
+                    <Textarea id={id} name={def.name} defaultValue={valueOf(def)} rows={def.rows ?? (def.type === "markdown" ? 16 : def.type === "json" ? 8 : 4)} placeholder={def.placeholder} className={def.type === "json" ? "font-mono" : undefined} />
                   ) : def.type === "select" ? (
                     <Select id={id} name={def.name} defaultValue={valueOf(def)}>
                       {def.options?.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
@@ -114,11 +115,11 @@ export function EntityForm({
           </div>
         </section>
       ))}
-      <div className="flex items-center gap-3">
-        <button type="submit" disabled={pending} className="inline-flex h-11 items-center gap-2 rounded-full bg-accent px-6 font-display text-sm font-semibold uppercase tracking-[0.12em] text-white hover:bg-[#ff1a45] disabled:opacity-60">
-          {pending ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />} {submitLabel}
-        </button>
-        {cancelHref && <Link href={cancelHref} className="text-sm text-muted hover:text-ice">Cancel</Link>}
+      <div className="flex items-center gap-2">
+        <Button type="submit" appearance="primary" disabled={pending}>
+          {pending && <Loader2 className="size-4 animate-spin" aria-hidden />} {submitLabel}
+        </Button>
+        {cancelHref && <ButtonLink href={cancelHref} appearance="subtle">Cancel</ButtonLink>}
       </div>
     </form>
   );

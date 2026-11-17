@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ImagePlus, Loader2, Library, X } from "lucide-react";
 import { getBrowserSupabase } from "@/lib/supabase/browser";
 import { recordMedia } from "@/actions/media";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/form";
 import { slugify } from "@/lib/utils";
 import type { MediaRow } from "@/types";
@@ -57,19 +58,19 @@ export function ImageField({ name, defaultValue, folder = "uploads", id }: { nam
       <div className="flex gap-2">
         <Input id={id} name={name} value={value} onChange={(e) => setValue(e.target.value)} placeholder="https://… or upload" />
         <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => onFile(e.target.files?.[0])} />
-        <button type="button" onClick={() => fileRef.current?.click()} disabled={busy} title="Upload image" className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-white/15 px-3 text-xs font-semibold hover:bg-white/6 disabled:opacity-50">
-          {busy ? <Loader2 className="size-4 animate-spin" /> : <ImagePlus className="size-4" />} Upload
-        </button>
-        <button type="button" onClick={() => setLibraryOpen(true)} title="Choose from media library" className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-white/15 px-3 text-xs font-semibold hover:bg-white/6">
-          <Library className="size-4" /> Library
-        </button>
+        <Button onClick={() => fileRef.current?.click()} disabled={busy} title="Upload image" className="h-9!">
+          {busy ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <ImagePlus className="size-4" aria-hidden />} Upload
+        </Button>
+        <Button onClick={() => setLibraryOpen(true)} title="Choose from media library" className="h-9!">
+          <Library className="size-4" aria-hidden /> Library
+        </Button>
       </div>
-      {error && <p className="text-xs text-red-400">{error}</p>}
+      {error && <p className="type-body-small text-danger">{error}</p>}
       {value && (
-        <div className="relative h-32 w-full max-w-xs overflow-hidden rounded-lg border border-line bg-navy-2">
+        <div className="relative h-32 w-full max-w-xs overflow-hidden rounded-lg border bg-neutral">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={value} alt="" className="size-full object-cover" />
-          <button type="button" onClick={() => setValue("")} aria-label="Clear image" className="absolute right-1.5 top-1.5 rounded-full bg-black/60 p-1 hover:bg-black/80"><X className="size-3.5" /></button>
+          <button type="button" onClick={() => setValue("")} aria-label="Clear image" className="absolute right-1.5 top-1.5 inline-flex size-6 items-center justify-center rounded-sm bg-surface-overlay text-icon shadow-overlay hover:bg-surface-overlay-hovered"><X className="size-3.5" aria-hidden /></button>
         </div>
       )}
       {libraryOpen && <MediaLibraryDialog onPick={(url) => { setValue(url); setLibraryOpen(false); }} onClose={() => setLibraryOpen(false)} />}
@@ -88,20 +89,21 @@ function MediaLibraryDialog({ onPick, onClose }: { onPick: (url: string) => void
   }, []);
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Media library">
-      <div className="absolute inset-0 bg-black/70" onClick={onClose} />
-      <div className="relative max-h-[80vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-line bg-navy p-5">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="font-display text-xl font-bold uppercase">Media library</h2>
-          <button type="button" onClick={onClose} aria-label="Close" className="rounded-lg p-1 hover:bg-white/10"><X className="size-5" /></button>
+      <div className="absolute inset-0 bg-blanket" onClick={onClose} />
+      {/* Modal dialog: elevation.surface.overlay with elevation.shadow.overlay */}
+      <div className="relative max-h-[80vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-surface-overlay p-6 shadow-overlay">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h2 className="type-heading-medium">Media library</h2>
+          <Button appearance="subtle" iconOnly onClick={onClose} aria-label="Close"><X className="size-4" aria-hidden /></Button>
         </div>
-        {error && <p className="text-sm text-red-400">{error}</p>}
-        {!items && !error && <p className="text-sm text-muted">Loading…</p>}
-        {items && items.length === 0 && <p className="text-sm text-muted">No uploads yet. Use the Upload button or the Media page.</p>}
+        {error && <p className="text-sm text-danger">{error}</p>}
+        {!items && !error && <p className="text-sm text-subtle">Loading…</p>}
+        {items && items.length === 0 && <p className="text-sm text-subtle">No uploads yet. Use the Upload button or the Media page.</p>}
         {items && items.length > 0 && (
           <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
             {items.map((m) => (
-              <button key={m.id} type="button" onClick={() => onPick(m.url)} className="group relative aspect-square overflow-hidden rounded-lg border border-line bg-navy-2 hover:border-accent">
-                <Image src={m.url} alt={m.alt} fill sizes="160px" className="object-cover transition group-hover:scale-105" unoptimized />
+              <button key={m.id} type="button" onClick={() => onPick(m.url)} className="relative aspect-square cursor-pointer overflow-hidden rounded-lg border bg-neutral hover:border-selected">
+                <Image src={m.url} alt={m.alt} fill sizes="160px" className="object-cover" unoptimized />
               </button>
             ))}
           </div>

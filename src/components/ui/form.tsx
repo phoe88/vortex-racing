@@ -1,11 +1,17 @@
 import type { ComponentProps } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/**
+ * Form controls, following the Atlassian Design System text field spec:
+ * color.background.input with a color.border.input outline, radius.medium,
+ * and a color.border.focused ring when focused.
+ */
 const control =
-  "w-full rounded-lg border border-white/12 bg-white/4 px-3.5 py-2.5 text-sm text-ice placeholder:text-muted/70 outline-none transition focus:border-accent-2/70 focus:bg-white/6 focus:ring-2 focus:ring-accent-2/20 disabled:opacity-50";
+  "w-full rounded-md border border-input bg-input px-2 py-[7px] text-sm text-default outline-none transition-colors placeholder:text-subtlest hover:bg-input-hovered focus:border-focused focus:bg-input-pressed focus:shadow-[inset_0_0_0_1px_var(--ds-border-focused)] aria-invalid:border-danger disabled:cursor-not-allowed disabled:border-disabled disabled:bg-disabled disabled:text-disabled";
 
 export function Label({ className, ...props }: ComponentProps<"label">) {
-  return <label className={cn("mb-1.5 block text-xs font-semibold uppercase tracking-[0.14em] text-muted", className)} {...props} />;
+  return <label className={cn("type-body-small mb-1 block font-bold text-subtle", className)} {...props} />;
 }
 
 export function Input({ className, ...props }: ComponentProps<"input">) {
@@ -13,29 +19,36 @@ export function Input({ className, ...props }: ComponentProps<"input">) {
 }
 
 export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
-  return <textarea className={cn(control, "min-h-28 leading-relaxed", className)} {...props} />;
+  return <textarea className={cn(control, "min-h-28", className)} {...props} />;
 }
 
 export function Select({ className, children, ...props }: ComponentProps<"select">) {
   return (
-    <select className={cn(control, "appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%238b96b5%22 stroke-width=%222%22><path d=%22m6 9 6 6 6-6%22/></svg>')] bg-[length:12px] bg-[right_0.9rem_center] bg-no-repeat pr-9", className)} {...props}>
-      {children}
-    </select>
+    <span className="relative block">
+      <select className={cn(control, "cursor-pointer appearance-none pr-8", className)} {...props}>
+        {children}
+      </select>
+      <ChevronDown className="pointer-events-none absolute right-2 top-1/2 size-4 -translate-y-1/2 text-icon-subtle" aria-hidden />
+    </span>
   );
 }
 
 export function Checkbox({ className, label, ...props }: ComponentProps<"input"> & { label: string }) {
   return (
-    <label className="inline-flex cursor-pointer items-center gap-2.5 text-sm text-ice">
-      <input type="checkbox" className={cn("size-4 rounded border-white/20 bg-white/5 accent-[var(--accent)]", className)} {...props} />
+    <label className="inline-flex cursor-pointer items-center gap-2 text-sm text-default">
+      <input type="checkbox" className={cn("size-4 cursor-pointer rounded-xs accent-(--ds-background-selected-bold)", className)} {...props} />
       {label}
     </label>
   );
 }
 
+export function HelperMessage({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <p className={cn("type-body-small mt-1 text-subtlest", className)}>{children}</p>;
+}
+
 export function FieldError({ errors }: { errors?: string[] }) {
   if (!errors?.length) return null;
-  return <p className="mt-1.5 text-xs text-red-400">{errors[0]}</p>;
+  return <p className="type-body-small mt-1 text-danger">{errors[0]}</p>;
 }
 
 export function Field({
@@ -57,7 +70,7 @@ export function Field({
     <div className={className}>
       <Label htmlFor={htmlFor}>{label}</Label>
       {children}
-      {hint && !errors?.length && <p className="mt-1.5 text-xs text-muted/80">{hint}</p>}
+      {hint && !errors?.length && <HelperMessage>{hint}</HelperMessage>}
       <FieldError errors={errors} />
     </div>
   );

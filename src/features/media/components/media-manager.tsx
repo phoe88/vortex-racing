@@ -5,6 +5,8 @@ import { useRef, useState, useTransition } from "react";
 import { Check, Copy, Loader2, Trash2, Upload } from "lucide-react";
 import { uploadToMedia } from "@/features/admin/components/image-field";
 import { deleteMedia, updateMediaAlt } from "@/actions/media";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/form";
 import type { MediaRow } from "@/types";
 
 function fmtBytes(n: number | null) {
@@ -36,26 +38,26 @@ export function MediaManager({ items }: { items: MediaRow[] }) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <label
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => { e.preventDefault(); void onFiles(e.dataTransfer.files); }}
-        className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-white/15 px-6 py-12 text-center transition hover:border-accent/60 hover:bg-white/3"
+        className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-bold px-6 py-10 text-center transition-colors hover:border-selected hover:bg-selected has-focus-visible:border-focused"
       >
         <input ref={fileRef} type="file" accept="image/*,video/mp4" multiple className="hidden" onChange={(e) => onFiles(e.target.files)} />
-        {busy ? <Loader2 className="size-8 animate-spin text-accent-2" /> : <Upload className="size-8 text-accent-2" />}
-        <p className="font-display text-lg font-bold uppercase">{busy ? "Uploading…" : "Drop files here or click to upload"}</p>
-        <p className="text-xs text-muted">JPG, PNG, WebP, AVIF, SVG or MP4 · up to 8 MB each · stored in the Supabase “media” bucket</p>
-        {error && <p className="text-sm text-red-400">{error}</p>}
+        {busy ? <Loader2 className="size-6 animate-spin text-icon-subtle" aria-hidden /> : <Upload className="size-6 text-icon-subtle" aria-hidden />}
+        <p className="type-heading-small">{busy ? "Uploading…" : "Drop files here or click to upload"}</p>
+        <p className="type-body-small text-subtle">JPG, PNG, WebP, AVIF, SVG or MP4 · up to 8 MB each · stored in the Supabase “media” bucket</p>
+        {error && <p className="text-sm text-danger">{error}</p>}
       </label>
 
       {items.length === 0 ? (
-        <p className="text-sm text-muted">No uploads yet.</p>
+        <p className="text-sm text-subtle">No uploads yet.</p>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {items.map((m) => (
             <div key={m.id} className="card overflow-hidden">
-              <div className="relative aspect-square bg-navy-2">
+              <div className="relative aspect-square bg-neutral">
                 {m.mime_type?.startsWith("video/") ? (
                   <video src={m.url} className="size-full object-cover" muted />
                 ) : (
@@ -63,19 +65,19 @@ export function MediaManager({ items }: { items: MediaRow[] }) {
                 )}
               </div>
               <div className="space-y-2 p-3">
-                <input
+                <Input
                   defaultValue={m.alt}
                   placeholder="Alt text"
                   onBlur={(e) => { if (e.target.value !== m.alt) start(async () => { await updateMediaAlt(m.id, e.target.value); }); }}
-                  className="w-full rounded-md border border-white/10 bg-white/4 px-2 py-1 text-xs outline-none focus:border-accent-2/70"
+                  className="py-[3px]!"
                   aria-label="Alt text"
                 />
-                <p className="truncate text-[11px] text-muted" title={m.path}>{m.path.split("/").pop()} · {fmtBytes(m.size_bytes)}{m.width ? ` · ${m.width}×${m.height}` : ""}</p>
+                <p className="type-body-small truncate text-subtlest" title={m.path}>{m.path.split("/").pop()} · {fmtBytes(m.size_bytes)}{m.width ? ` · ${m.width}×${m.height}` : ""}</p>
                 <div className="flex items-center justify-between">
-                  <button type="button" onClick={() => { navigator.clipboard.writeText(m.url); setCopied(m.id); setTimeout(() => setCopied(null), 1500); }} className="inline-flex items-center gap-1 rounded-md border border-white/12 px-2 py-1 text-[11px] font-semibold hover:bg-white/6">
-                    {copied === m.id ? <Check className="size-3 text-success" /> : <Copy className="size-3" />} {copied === m.id ? "Copied" : "Copy URL"}
-                  </button>
-                  <button type="button" onClick={() => { if (confirm("Delete this file from storage?")) start(async () => { const r = await deleteMedia(m.id, m.path); if (r && !r.ok) alert(r.message); router.refresh(); }); }} aria-label="Delete" className="rounded-md p-1 text-red-300 hover:bg-red-500/15"><Trash2 className="size-4" /></button>
+                  <Button spacing="compact" onClick={() => { navigator.clipboard.writeText(m.url); setCopied(m.id); setTimeout(() => setCopied(null), 1500); }}>
+                    {copied === m.id ? <Check className="size-3.5 text-icon-success" aria-hidden /> : <Copy className="size-3.5" aria-hidden />} {copied === m.id ? "Copied" : "Copy URL"}
+                  </Button>
+                  <Button appearance="subtle" spacing="compact" iconOnly className="text-danger!" onClick={() => { if (confirm("Delete this file from storage?")) start(async () => { const r = await deleteMedia(m.id, m.path); if (r && !r.ok) alert(r.message); router.refresh(); }); }} aria-label="Delete"><Trash2 className="size-4" aria-hidden /></Button>
                 </div>
               </div>
             </div>

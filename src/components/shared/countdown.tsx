@@ -1,5 +1,6 @@
 "use client";
 import { useSyncExternalStore } from "react";
+import { Lozenge } from "@/components/ui/lozenge";
 
 function parts(ms: number) {
   const total = Math.max(0, Math.floor(ms / 1000));
@@ -25,29 +26,26 @@ export function Countdown({ target, className }: { target: string; className?: s
   const diff = now === null ? null : new Date(target).getTime() - now;
   const p = diff === null ? null : parts(diff);
   const items = [
-    ["Days", p?.days], ["Hrs", p?.hours], ["Min", p?.minutes], ["Sec", p?.seconds],
+    ["Days", p?.days], ["Hours", p?.hours], ["Minutes", p?.minutes], ["Seconds", p?.seconds],
   ] as const;
 
   if (diff !== null && diff <= 0) {
     return (
       <p className={className}>
-        <span className="inline-flex items-center gap-2 font-display text-2xl font-bold uppercase text-accent-2">
-          <span className="relative flex size-3"><span className="absolute inline-flex size-full animate-pulse-ring rounded-full bg-accent" /><span className="relative inline-flex size-3 rounded-full bg-accent" /></span>
-          Lights out
-        </span>
+        <Lozenge appearance="success">Lights out</Lozenge>
       </p>
     );
   }
 
   return (
     <div className={className} role="timer" aria-live="off" aria-label="Countdown to race start">
-      <div className="grid grid-cols-4 gap-2 sm:gap-3">
+      <div className="grid grid-cols-4 gap-2">
         {items.map(([label, value]) => (
-          <div key={label} className="rounded-xl border border-white/10 bg-white/5 px-2 py-3 text-center backdrop-blur">
-            <div className="font-display text-3xl font-bold tabular-nums leading-none sm:text-4xl">
+          <div key={label} className="rounded-lg bg-surface-raised px-2 py-3 text-center">
+            <div className="type-metric-medium tabular-nums">
               {value === undefined || value === null ? "--" : String(value).padStart(2, "0")}
             </div>
-            <div className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{label}</div>
+            <div className="type-body-small mt-1 text-subtle">{label}</div>
           </div>
         ))}
       </div>

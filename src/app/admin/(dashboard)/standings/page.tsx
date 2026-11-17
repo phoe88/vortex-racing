@@ -15,7 +15,7 @@ export default async function AdminStandings() {
   return (
     <>
       <AdminPageHeader title={`${season} standings`} description="Championship tables shown on the home page and /standings. Tick “Team” to highlight your own entries." />
-      <div className="space-y-8">
+      <div className="space-y-4">
         <RowsEditor
           action={saveStandings}
           hidden={{ season: String(season), kind: "drivers" }}

@@ -3,8 +3,9 @@ import { adminList } from "@/features/admin/queries";
 import { AdminPageHeader } from "@/features/admin/components/page-header";
 import { DataTable, EmptyState, Td, Th } from "@/features/admin/components/data-table";
 import { SubscriberActions } from "@/features/newsletter/components/subscriber-actions";
-import { Badge } from "@/components/ui/badge";
+import { Lozenge } from "@/components/ui/lozenge";
 import { formatDate } from "@/lib/utils";
+import { buttonClass } from "@/components/ui/button";
 
 export const metadata = { title: "Subscribers" };
 
@@ -16,16 +17,16 @@ export default async function AdminSubscribers() {
       <AdminPageHeader
         title="Newsletter subscribers"
         description={`${active} active · ${subs.length - active} unsubscribed`}
-        actions={<a href="/api/admin/subscribers/export" className="inline-flex h-10 items-center gap-2 rounded-full border border-white/15 px-4 text-xs font-semibold uppercase tracking-[0.12em] hover:bg-white/6"><Download className="size-4" /> Export CSV</a>}
+        actions={<a href="/api/admin/subscribers/export" className={buttonClass()}><Download className="size-4" aria-hidden /> Export CSV</a>}
       />
       {subs.length === 0 ? <EmptyState title="No subscribers yet" hint="Sign-ups from the website appear here." /> : (
         <DataTable head={<><Th>Email</Th><Th>Status</Th><Th>Source</Th><Th>Joined</Th><Th className="text-right">Actions</Th></>}>
           {subs.map((s) => (
-            <tr key={s.id} className="hover:bg-white/3">
+            <tr key={s.id}>
               <Td className="font-medium">{s.email}</Td>
-              <Td><Badge tone={s.status === "subscribed" ? "success" : "muted"}>{s.status}</Badge></Td>
-              <Td className="text-muted">{s.source}</Td>
-              <Td className="text-muted">{formatDate(s.created_at, { day: "numeric", month: "short", year: "numeric" })}</Td>
+              <Td><Lozenge appearance={s.status === "subscribed" ? "success" : "neutral"}>{s.status}</Lozenge></Td>
+              <Td className="text-subtle">{s.source}</Td>
+              <Td className="text-subtle">{formatDate(s.created_at, { day: "numeric", month: "short", year: "numeric" })}</Td>
               <Td className="text-right"><SubscriberActions id={s.id} status={s.status} /></Td>
             </tr>
           ))}

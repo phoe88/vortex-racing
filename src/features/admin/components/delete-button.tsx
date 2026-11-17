@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Loader2, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import type { ActionState } from "@/types";
 
 export function DeleteButton({ action, label = "Delete", confirmText = "Delete this item? This cannot be undone.", onDone, compact = false }: {
@@ -14,11 +15,16 @@ export function DeleteButton({ action, label = "Delete", confirmText = "Delete t
   const router = useRouter();
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const icon = pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <Trash2 className="size-4" aria-hidden />;
   return (
     <span className="inline-flex flex-col items-end">
-      <button
-        type="button"
+      <Button
+        appearance={compact ? "subtle" : "danger"}
+        iconOnly={compact}
+        aria-label={compact ? label : undefined}
+        title={compact ? label : undefined}
         disabled={pending}
+        className={compact ? "text-danger!" : undefined}
         onClick={() => {
           if (!window.confirm(confirmText)) return;
           start(async () => {
@@ -27,12 +33,11 @@ export function DeleteButton({ action, label = "Delete", confirmText = "Delete t
             else { onDone?.(); router.refresh(); }
           });
         }}
-        className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/30 px-2.5 py-1.5 text-xs font-semibold text-red-300 transition hover:bg-red-500/15 disabled:opacity-50"
       >
-        {pending ? <Loader2 className="size-3.5 animate-spin" /> : <Trash2 className="size-3.5" />}
+        {icon}
         {!compact && label}
-      </button>
-      {error && <span className="mt-1 text-[11px] text-red-400">{error}</span>}
+      </Button>
+      {error && <span className="type-body-small mt-1 text-danger">{error}</span>}
     </span>
   );
 }

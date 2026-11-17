@@ -25,7 +25,7 @@ const items: { href: string; label: string; Icon: LucideIcon; minRole?: UserRole
 export function AdminNav({ role, onNavigate }: { role: UserRole; onNavigate?: () => void }) {
   const pathname = usePathname();
   return (
-    <nav aria-label="Admin" className="space-y-0.5">
+    <nav aria-label="Admin" className="space-y-1">
       {items
         .filter((i) => !i.minRole || role === "admin")
         .map(({ href, label, Icon }) => {
@@ -35,12 +35,13 @@ export function AdminNav({ role, onNavigate }: { role: UserRole; onNavigate?: ()
               key={href}
               href={href}
               onClick={onNavigate}
+              aria-current={active ? "page" : undefined}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition",
-                active ? "bg-accent text-white" : "text-ice/75 hover:bg-white/6 hover:text-white",
+                "flex h-8 items-center gap-2 rounded-md px-2 text-sm font-medium transition-colors",
+                active ? "bg-selected text-selected" : "text-subtle hover:bg-neutral-subtle-hovered active:bg-neutral-subtle-pressed",
               )}
             >
-              <Icon className="size-4" /> {label}
+              <Icon className="size-4 shrink-0" aria-hidden /> {label}
             </Link>
           );
         })}

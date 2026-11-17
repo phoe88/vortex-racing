@@ -18,13 +18,13 @@ export default async function StandingsPage() {
   return (
     <>
       <PageHero eyebrow={`${siteConfig.season} ${siteConfig.championshipName}`} title="Standings" description={`After ${done} of ${races.length} rounds. Team entries highlighted.`} />
-      <div className="container-x grid gap-10 pb-16 lg:grid-cols-[1.4fr_1fr]">
-        <Reveal className="card p-5 sm:p-7">
-          <h2 className="display mb-4 text-3xl">Drivers&apos; championship</h2>
+      <div className="container-x grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+        <Reveal className="card p-4 sm:p-6">
+          <h2 className="type-heading-medium mb-3">Drivers&apos; championship</h2>
           <DriverStandingsTable rows={drivers} />
         </Reveal>
-        <Reveal delay={0.1} className="card self-start p-5 sm:p-7">
-          <h2 className="display mb-4 text-3xl">Constructors&apos;</h2>
+        <Reveal delay={0.05} className="card self-start p-4 sm:p-6">
+          <h2 className="type-heading-medium mb-3">Constructors&apos; championship</h2>
           <ConstructorStandingsTable rows={constructors} />
         </Reveal>
       </div>

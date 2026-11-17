@@ -1,16 +1,13 @@
-import { Barlow, Barlow_Condensed } from "next/font/google";
+import { Inter } from "next/font/google";
 
-export const fontBody = Barlow({
+/**
+ * The Atlassian Design System typography tokens name "Atlassian Sans", which is
+ * only licensed for Atlassian's own products. Atlassian Sans is drawn from
+ * Inter, so Inter stands in here. It is a variable font, which the design
+ * system's 653 bold weight needs.
+ */
+export const fontSans = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-export const fontDisplay = Barlow_Condensed({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  style: ["normal", "italic"],
-  variable: "--font-display",
+  variable: "--font-inter",
   display: "swap",
 });
