@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -9,10 +9,11 @@ const INITIAL: ScrollState = { scrollable: false, atStart: true, atEnd: false, t
 const DRAG_THRESHOLD = 6;
 
 /**
- * Horizontal scroll rail with a title, round previous/next buttons and a bar
- * showing how far along the rail you are. It scrolls with touch, trackpad,
- * shift + mouse wheel, the arrow buttons, or by clicking and dragging with a
- * mouse. Items snap into place and line up with the page content.
+ * Horizontal scroll rail with a title, round previous/next buttons and a
+ * scrollbar under the items. It scrolls with touch, trackpad, shift + mouse
+ * wheel, the arrow buttons, the keyboard, by dragging the items with a mouse,
+ * or by dragging or clicking the scrollbar. Items snap into place and line up
+ * with the page content.
  */
 export function Carousel({
   title,
@@ -33,6 +34,10 @@ export function Carousel({
   const rail = useRef<HTMLUListElement>(null);
   const [state, setState] = useState<ScrollState>(INITIAL);
   const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
+  const track = useRef<HTMLDivElement>(null);
+  const barDrag = useRef<{ x: number; left: number; ratio: number } | null>(null);
+  const [barDragging, setBarDragging] = useState(false);
+  const railId = useId();
 
   // Track scroll position for the arrows and the progress bar.
   useEffect(() => {
@@ -93,6 +98,59 @@ export function Carousel({
     // Keep the flag until the click that follows the drag has been swallowed.
     setTimeout(() => { drag.current = null; }, 0);
   };
+  // Scrollbar: drag the thumb, or press anywhere on the track to jump there and keep dragging.
+  const onTrackPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = rail.current;
+    const t = track.current;
+    if (!el || !t || (e.pointerType === "mouse" && e.button !== 0)) return;
+    e.preventDefault();
+    // preventDefault stops the browser focusing the bar, so focus it here for keyboard use.
+    t.focus({ preventScroll: true });
+    const rect = t.getBoundingClientRect();
+    const max = el.scrollWidth - el.clientWidth;
+    const thumbPx = state.thumbWidth * rect.width;
+    const free = Math.max(1, rect.width - thumbPx);
+    const thumbStart = rect.left + state.thumbLeft * rect.width;
+    let left = el.scrollLeft;
+    if (e.clientX < thumbStart || e.clientX > thumbStart + thumbPx) {
+      // Centre the thumb under the pointer.
+      const frac = Math.min(1, Math.max(0, (e.clientX - rect.left - thumbPx / 2) / free));
+      left = frac * max;
+    }
+    el.style.scrollSnapType = "none";
+    el.scrollLeft = left;
+    barDrag.current = { x: e.clientX, left, ratio: max / free };
+    t.setPointerCapture(e.pointerId);
+    setBarDragging(true);
+  };
+  const onTrackPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = rail.current;
+    const d = barDrag.current;
+    if (!el || !d) return;
+    el.scrollLeft = d.left + (e.clientX - d.x) * d.ratio;
+  };
+  const endBarDrag = () => {
+    const el = rail.current;
+    if (!barDrag.current) return;
+    barDrag.current = null;
+    setBarDragging(false);
+    if (el) el.style.scrollSnapType = "";
+  };
+  const onTrackKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const el = rail.current;
+    if (!el) return;
+    const step = el.clientWidth * 0.8;
+    const to =
+      e.key === "ArrowRight" || e.key === "PageDown" ? el.scrollLeft + step
+      : e.key === "ArrowLeft" || e.key === "PageUp" ? el.scrollLeft - step
+      : e.key === "Home" ? 0
+      : e.key === "End" ? el.scrollWidth
+      : null;
+    if (to === null) return;
+    e.preventDefault();
+    el.scrollTo({ left: to, behavior: "smooth" });
+  };
+
   const onClickCapture = (e: React.MouseEvent) => {
     if (drag.current?.moved) {
       e.preventDefault();
@@ -113,6 +171,7 @@ export function Carousel({
       </div>
       <ul
         ref={rail}
+        id={railId}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
@@ -132,12 +191,37 @@ export function Carousel({
         ))}
       </ul>
       {state.scrollable && (
-        <div className="rail-x mt-6" aria-hidden>
-          <div className="relative h-1 overflow-hidden rounded-full bg-neutral">
-            <div
-              className="absolute inset-y-0 rounded-full bg-white/60 transition-[left] duration-150 ease-out"
-              style={{ width: `${state.thumbWidth * 100}%`, left: `${state.thumbLeft * 100}%` }}
-            />
+        <div className="rail-x mt-3">
+          {/* The visible bar is thin; the hit area around it is tall enough to grab. */}
+          <div
+            ref={track}
+            role="scrollbar"
+            aria-controls={railId}
+            aria-orientation="horizontal"
+            aria-label={`Scroll ${title}`}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(state.thumbWidth < 1 ? (state.thumbLeft / (1 - state.thumbWidth)) * 100 : 0)}
+            tabIndex={0}
+            onPointerDown={onTrackPointerDown}
+            onPointerMove={onTrackPointerMove}
+            onPointerUp={endBarDrag}
+            onPointerCancel={endBarDrag}
+            onKeyDown={onTrackKeyDown}
+            className={cn(
+              "group/bar relative flex h-6 touch-none select-none items-center rounded-full",
+              barDragging ? "cursor-grabbing" : "cursor-pointer",
+            )}
+          >
+            <div className="relative h-1 w-full rounded-full bg-neutral transition-[height] group-hover/bar:h-1.5">
+              <div
+                className={cn(
+                  "absolute inset-y-0 rounded-full bg-white/60 group-hover/bar:bg-white/80",
+                  barDragging ? "bg-white" : "transition-[left] duration-150 ease-out",
+                )}
+                style={{ width: `${state.thumbWidth * 100}%`, left: `${state.thumbLeft * 100}%` }}
+              />
+            </div>
           </div>
         </div>
       )}
