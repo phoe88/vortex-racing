@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
-import { DEFAULT_COLOR_MODE, SURFACE_COLOR } from "@/lib/theme";
+import { BRAND } from "@/lib/theme";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
@@ -9,8 +9,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: siteConfig.description,
     start_url: "/",
     display: "standalone",
-    background_color: SURFACE_COLOR[DEFAULT_COLOR_MODE],
-    theme_color: SURFACE_COLOR[DEFAULT_COLOR_MODE],
+    background_color: BRAND.navy,
+    theme_color: BRAND.navy,
     icons: [{ src: "/icon", sizes: "512x512", type: "image/png" }],
   };
 }

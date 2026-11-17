@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-/* Table styling follows the Atlassian Design System dynamic table: small bold
+/* Admin data table: small bold
    subtle headers over a 2px rule, hairline row dividers and a hover tint. */
 export function DataTable({ head, children, className }: { head: React.ReactNode; children: React.ReactNode; className?: string }) {
   return (

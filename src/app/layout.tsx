@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { siteConfig, getSiteUrl } from "@/config/site";
 import { VercelInsights } from "@/components/layout/vercel-insights";
-import { DEFAULT_COLOR_MODE, SURFACE_COLOR, colorModeScript, themeHtmlAttrs } from "@/lib/theme";
+import { BRAND } from "@/lib/theme";
 import { fontSans } from "./fonts";
-import "./atlassian-tokens.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -32,17 +31,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: SURFACE_COLOR[DEFAULT_COLOR_MODE],
+  themeColor: BRAND.navy,
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" {...themeHtmlAttrs} className={`${fontSans.variable} h-full`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: colorModeScript }} />
-      </head>
+    <html lang="en" className={`${fontSans.variable} h-full`}>
       <body className="flex min-h-full flex-col">
         {children}
         <VercelInsights />

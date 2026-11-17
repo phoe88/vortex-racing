@@ -2,7 +2,7 @@
 
 **Live site:** https://vortex-racing.vercel.app (demo content until Supabase is connected)
 
-A production-ready motorsport team website and content studio built on **Next.js 16 (App Router, Cache Components)**, **React 19 + TypeScript**, **Tailwind CSS 4**, the **Atlassian Design System**, **Motion**, **Lucide**, and **Supabase** (Postgres, Auth, Storage). Built for **Vercel**: deploys from GitHub with preview deployments, Vercel Image Optimization, generated Open Graph images, tag-based cache revalidation, **Vercel Web Analytics** and **Speed Insights**.
+A production-ready motorsport team website and content studio built on **Next.js 16 (App Router, Cache Components)**, **React 19 + TypeScript**, **Tailwind CSS 4**, **Motion**, **Lucide**, and **Supabase** (Postgres, Auth, Storage). Built for **Vercel**: deploys from GitHub with preview deployments, Vercel Image Optimization, generated Open Graph images, tag-based cache revalidation, **Vercel Web Analytics** and **Speed Insights**.
 
 | Public site | Admin (`/admin`) |
 | --- | --- |
@@ -122,23 +122,20 @@ scripts/seed.ts                     pnpm seed
 | Command | Purpose |
 | --- | --- |
 | `pnpm dev` | Development server |
-| `pnpm tokens` | Regenerate `src/app/atlassian-tokens.css` from `@atlaskit/tokens` (also runs before `dev` and `build`) |
 | `pnpm build` / `pnpm start` | Production build and server |
 | `pnpm lint` / `pnpm typecheck` | ESLint / `tsc --noEmit` |
 | `pnpm seed` | Load demo content (and admin) into Supabase |
 
-## 5. Design system
+## 5. Design
 
-The whole site, public and admin, follows the [Atlassian Design System](https://atlassian.design/).
+The site is styled as a premium motorsport team site: a deep navy stage, white type, translucent glass panels, red pill buttons and full-bleed photography.
 
-* **Tokens come from the official package.** `scripts/build-ads-tokens.mjs` extracts the light, dark, spacing, typography, shape and motion themes from `@atlaskit/tokens` into `src/app/atlassian-tokens.css`. Upgrade the package and run `pnpm tokens` to pick up new token values.
-* **Tailwind is mapped onto the tokens.** `src/app/globals.css` removes Tailwind's own palette and shadows and exposes only design tokens as utilities, named after the tokens: `bg-surface-raised`, `text-subtle`, `border-selected`, `shadow-overlay`, `rounded-md` (radius.medium), and `type-heading-large` / `type-body` / `type-metric-medium` for the type scale. A colour that is not a token has no utility.
-* **Components follow the component specs.** `src/components/ui` holds the button (default, primary, subtle, warning, danger, discovery; default and compact spacing), lozenge, text field, select, checkbox, section message, breadcrumbs and skeleton. Tables, tabs, pagination, the top navigation and the admin side navigation follow the same specs.
-* **Light and dark themes.** Themes switch with the design system's own attributes on `<html>` (`data-theme`, `data-color-mode`). The header toggle saves the choice in `localStorage`, and an inline script applies it before first paint. The default is dark; change `DEFAULT_COLOR_MODE` in `src/lib/theme.ts`.
-* **Text over photographs.** Hero banners and photo cards spread `darkSubtree` from `src/lib/theme.ts`, which renders that subtree in the dark theme in either mode so the text stays legible.
-* **Lozenge colours.** Article categories each have their own accent in `src/features/news/categories.ts`. Race status and driver role use the semantic appearances (information, success, discovery, neutral, danger).
-* **Typeface.** The typography tokens name Atlassian Sans, which is licensed for Atlassian's own products only. Inter, the typeface it is based on, is loaded with `next/font` and used in its place.
+* **Tokens.** Every colour, radius and shadow is defined once at the top of `src/app/globals.css`. Tailwind's own palette is removed, so only these tokens are available as utilities: `bg-surface`, `bg-surface-raised` (glass), `text-subtle`, `bg-brand-bold` (red), `border-default` and so on.
+* **Type.** Lexend, loaded with `next/font`, from 400 to 800 weight. The scale runs from `type-body-small` up to `type-display-xl` and `type-mega`, the giant car names.
+* **Layout patterns.** A floating header that frosts on scroll with a full-screen menu; a photo mosaic of lead stories; glass widgets for standings and the next race with a live session countdown; scrolling rails with round arrow buttons; tilted driver cards; car names set enormous with the number in red; a red-glow newsletter block; and a footer partner wall.
+* **Components.** `src/components/ui` holds the pill button, lozenge, form fields, carousel, section message and skeleton. Page-level pieces such as the article, driver and race cards, the car showcase and the newsletter block are in `src/components/shared`.
+* **Category colours.** Each article category has its own lozenge colour in `src/features/news/categories.ts`.
 
 ## 6. Customising the brand
 
-Everything brand-related lives in `src/config/site.ts` (name, tagline, navigation, season). The logo mark is in `src/components/shared/logo.tsx` and is drawn with accent tokens. Colours, radii and type come from the design system, so restyle by choosing different tokens rather than adding hex values. Replace the demo Unsplash imagery through the admin media library, and drop the Unsplash entry from `images.remotePatterns` in `next.config.ts` once you have.
+Everything brand-related lives in `src/config/site.ts` (name, tagline, navigation, season). The logo mark is in `src/components/shared/logo.tsx`. To change the colour scheme, edit the tokens at the top of `src/app/globals.css`; nothing else hard-codes colours. Replace the demo Unsplash imagery through the admin media library, and drop the Unsplash entry from `images.remotePatterns` in `next.config.ts` once you have.

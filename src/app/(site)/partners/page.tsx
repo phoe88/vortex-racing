@@ -20,22 +20,22 @@ export default async function PartnersPage() {
   const label = Object.fromEntries(PARTNER_TIERS.map((t) => [t.value, t.label]));
   return (
     <>
-      <PageHero eyebrow="Partnerships" title="Stronger together" description="Racing is a team sport that extends far beyond the garage. These are the brands that make every lap possible." image={unsplash(IMG.pitLaneCrowd, 2000)} />
-      <div className="container-x space-y-8 pt-2">
+      <PageHero title="Our Partners" description="Racing is a team sport that extends far beyond the garage. These are the brands that make every lap possible." image={unsplash(IMG.pitLaneCrowd, 2400)} />
+      <div className="container-x mt-20 space-y-20">
         {TIER_ORDER.map((tier) => {
           const list = grouped[tier];
           if (!list.length) return null;
           const big = tier === "title" || tier === "principal";
           return (
             <Reveal key={tier}>
-              <h2 className="type-heading-medium mb-3">{label[tier]}{list.length > 1 ? "s" : ""}</h2>
-              <div className={big ? "grid gap-4 md:grid-cols-2" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"}>
+              <h2 className="type-heading-xlarge">{label[tier]}{list.length > 1 ? "s" : ""}</h2>
+              <div className={big ? "mt-8 grid gap-4 md:grid-cols-2" : "mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"}>
                 {list.map((p) => (
-                  <div key={p.id} className="card flex flex-col gap-3 p-4 sm:p-6">
-                    <PartnerLogo partner={p} size={big ? "lg" : "md"} className="text-default!" />
-                    {p.description && <p className="text-sm text-subtle">{p.description}</p>}
+                  <div key={p.id} className="card flex flex-col gap-5 p-8">
+                    <div className="flex min-h-16 items-center"><PartnerLogo partner={p} size={big ? "lg" : "md"} /></div>
+                    {p.description && <p className="text-subtle">{p.description}</p>}
                     {p.website_url && (
-                      <a href={p.website_url} target="_blank" rel="noopener noreferrer sponsored" className="link mt-auto inline-flex items-center gap-1 text-sm font-medium">
+                      <a href={p.website_url} target="_blank" rel="noopener noreferrer sponsored" className={buttonClass({ spacing: "compact", className: "mt-auto self-start" })}>
                         Visit website <ExternalLink className="size-3.5" aria-hidden />
                       </a>
                     )}
@@ -45,11 +45,10 @@ export default async function PartnersPage() {
             </Reveal>
           );
         })}
-        <Reveal className="card p-6 text-center sm:p-8">
-          <p className="type-heading-xxsmall mb-1 text-subtlest">Partner with us</p>
-          <h2 className="type-heading-large">Put your brand on the grid</h2>
-          <p className="mx-auto mt-2 max-w-xl text-sm text-subtle">Our partnerships team builds bespoke programmes across hospitality, content, technology and B2B activation.</p>
-          <a href="mailto:partnerships@example.com" className={buttonClass({ appearance: "primary", className: "mt-4" })}>Get in touch</a>
+        <Reveal className="card p-10 text-center sm:p-16">
+          <h2 className="type-heading-xxlarge">Put your brand on the grid</h2>
+          <p className="mx-auto mt-4 max-w-xl text-subtle">Our partnerships team builds bespoke programmes across hospitality, content, technology and B2B activation.</p>
+          <a href="mailto:partnerships@example.com" className={buttonClass({ appearance: "primary", spacing: "large", className: "mt-8" })}>Get in touch</a>
         </Reveal>
       </div>
     </>

@@ -1,66 +1,55 @@
 import Link from "next/link";
 import { cacheLife } from "next/cache";
 import { siteConfig } from "@/config/site";
-import { Logo } from "@/components/shared/logo";
-import { NewsletterForm } from "@/components/shared/newsletter-form";
-import { InstagramIcon, XIcon, YoutubeIcon } from "@/components/shared/social-icons";
-import { buttonClass } from "@/components/ui/button";
+import { getPartnersByTier } from "@/features/partners/queries";
+import { PartnerLogo } from "@/components/shared/partner-logo";
 
-const footerLink = "text-sm text-subtle hover:text-default hover:underline";
+/** Partner wall followed by site links and the copyright line. */
+export async function SiteFooter() {
+  const partners = await getPartnersByTier();
+  const rows = [
+    { list: partners.principal, size: "md" as const, gap: "gap-x-12" },
+    { list: partners.official, size: "sm" as const, gap: "gap-x-10" },
+    { list: partners.supplier, size: "sm" as const, gap: "gap-x-10" },
+  ].filter((r) => r.list.length > 0);
+  const hasPartners = partners.title.length > 0 || rows.length > 0;
 
-export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t bg-surface-sunken">
-      <div className="container-x grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.4fr]">
-        <div>
-          <Logo />
-          <p className="mt-3 max-w-sm text-sm text-subtle">{siteConfig.description}</p>
-          <div className="mt-4 flex items-center gap-1">
-            {[
-              { href: siteConfig.social.x, label: "X", Icon: XIcon },
-              { href: siteConfig.social.instagram, label: "Instagram", Icon: InstagramIcon },
-              { href: siteConfig.social.youtube, label: "YouTube", Icon: YoutubeIcon },
-            ].map(({ href, label, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className={buttonClass({ appearance: "subtle", iconOnly: true })}
-              >
-                <Icon className="size-4" />
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {Object.entries(siteConfig.footerNav).map(([group, links]) => (
-          <div key={group}>
-            <p className="type-heading-xxsmall mb-3 text-subtlest">{group}</p>
-            <ul className="space-y-2">
-              {links.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className={footerLink}>{l.label}</Link>
-                </li>
+    <footer className="mt-24 sm:mt-32">
+      {hasPartners && (
+        <section aria-label="Team partners" className="container-x">
+          {partners.title.length > 0 && (
+            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 pb-8">
+              {partners.title.map((p) => <PartnerLogo key={p.id} partner={p} size="lg" />)}
+            </div>
+          )}
+          {rows.map((row, i) => (
+            <ul key={i} className={`flex flex-wrap items-center justify-center gap-y-4 border-t py-6 ${row.gap}`}>
+              {row.list.map((p) => (
+                <li key={p.id}><PartnerLogo partner={p} size={row.size} /></li>
               ))}
             </ul>
-          </div>
-        ))}
+          ))}
+          <div className="border-t" />
+        </section>
+      )}
 
-        <div>
-          <p className="type-heading-xxsmall mb-3 text-subtlest">Paddock Pass</p>
-          <p className="mb-3 text-sm text-subtle">Race previews, team news and behind-the-garage access, straight to your inbox.</p>
-          <NewsletterForm compact source="footer" />
-        </div>
-      </div>
-      <div className="border-t">
-        <div className="container-x type-body-small flex flex-col gap-2 py-4 text-subtlest sm:flex-row sm:items-center sm:justify-between">
+      <div className="container-x grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1.2fr]">
+        {Object.entries(siteConfig.footerNav).map(([group, links]) => (
+          <ul key={group} aria-label={group} className="space-y-3">
+            {links.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="link font-medium">{l.label}</Link>
+              </li>
+            ))}
+            {group === "Team" && (
+              <li><Link href="/admin" className="link font-medium">Team login</Link></li>
+            )}
+          </ul>
+        ))}
+        <div className="text-subtle sm:col-span-2 lg:col-span-1 lg:text-right">
           <CopyrightLine />
-          <div className="flex gap-4">
-            <Link href="/admin" className="hover:text-default hover:underline">Team login</Link>
-            <a href="#top" className="hover:text-default hover:underline">Back to top</a>
-          </div>
+          <p className="type-body-small mt-3 lg:ml-auto lg:max-w-xs">{siteConfig.description}</p>
         </div>
       </div>
     </footer>
@@ -71,5 +60,5 @@ export function SiteFooter() {
 async function CopyrightLine() {
   "use cache";
   cacheLife("days");
-  return <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>;
+  return <p>© {new Date().getFullYear()} {siteConfig.name}</p>;
 }

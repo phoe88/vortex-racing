@@ -1,13 +1,11 @@
-import { Inter } from "next/font/google";
+import { Lexend } from "next/font/google";
 
 /**
- * The Atlassian Design System typography tokens name "Atlassian Sans", which is
- * only licensed for Atlassian's own products. Atlassian Sans is drawn from
- * Inter, so Inter stands in here. It is a variable font, which the design
- * system's 653 bold weight needs.
+ * Lexend: a wide, geometric sans with heavy display weights. It is a variable
+ * font, so the 400 to 800 weights the design uses load as a single file.
  */
-export const fontSans = Inter({
+export const fontSans = Lexend({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-lexend",
   display: "swap",
 });

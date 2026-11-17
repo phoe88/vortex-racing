@@ -37,8 +37,8 @@ export function AdminNav({ role, onNavigate }: { role: UserRole; onNavigate?: ()
               onClick={onNavigate}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "flex h-8 items-center gap-2 rounded-md px-2 text-sm font-medium transition-colors",
-                active ? "bg-selected text-selected" : "text-subtle hover:bg-neutral-subtle-hovered active:bg-neutral-subtle-pressed",
+                "flex h-10 items-center gap-2.5 rounded-full px-3.5 text-sm font-medium transition-colors",
+                active ? "bg-neutral-bold text-inverse" : "text-subtle hover:bg-neutral hover:text-default active:bg-neutral-hovered",
               )}
             >
               <Icon className="size-4 shrink-0" aria-hidden /> {label}

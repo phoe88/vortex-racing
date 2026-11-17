@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Clock } from "lucide-react";
 import { getArticleBySlug, getArticleSlugs, getArticles } from "@/features/news/queries";
 import { ArticleCard } from "@/components/shared/article-card";
 import { CategoryLozenge } from "@/components/shared/category-lozenge";
-import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { ButtonLink } from "@/components/ui/button";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { Carousel } from "@/components/ui/carousel";
 import { renderMarkdown } from "@/lib/markdown";
 import { formatDate, readingTime, toYouTubeEmbed } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
@@ -40,7 +37,7 @@ export default async function ArticlePage({ params }: PageProps<"/news/[slug]">)
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article) notFound();
-  const related = await getArticles({ category: article.category, limit: 3, excludeId: article.id });
+  const related = await getArticles({ limit: 8, excludeId: article.id });
   const embed = toYouTubeEmbed(article.video_url);
 
   const jsonLd = {
@@ -55,61 +52,57 @@ export default async function ArticlePage({ params }: PageProps<"/news/[slug]">)
     publisher: { "@type": "Organization", name: siteConfig.name },
   };
 
+  const published = article.published_at
+    ? formatDate(article.published_at, { day: "2-digit", month: "2-digit", year: "numeric" })
+    : null;
+
   return (
-    <article className="pt-6 sm:pt-8">
+    <article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <header className="container-x max-w-4xl">
-        <Breadcrumbs items={[{ label: "News", href: "/news" }, { label: article.title }]} />
-        <div className="type-body-small mt-4 flex flex-wrap items-center gap-2 text-subtlest">
-          <CategoryLozenge category={article.category} />
-          <time dateTime={article.published_at ?? undefined}>{formatDate(article.published_at)}</time>
-          <span className="inline-flex items-center gap-1"><Clock className="size-3" aria-hidden /> {readingTime(article.body)} min read</span>
+
+      {/* Full-bleed lead image with the headline over its lower edge */}
+      <header className="relative isolate flex min-h-[78vh] flex-col justify-end overflow-hidden pb-12 pt-40 sm:pb-16">
+        {article.cover_image_url && <Image src={article.cover_image_url} alt="" fill priority sizes="100vw" className="-z-20 object-cover" />}
+        <div className="media-scrim-soft absolute inset-0 -z-10" />
+        <div className="container-x grid gap-6 lg:grid-cols-[12rem_minmax(0,46rem)]">
+          <div className="lg:pt-3"><CategoryLozenge category={article.category} /></div>
+          <h1 className="type-heading-xxlarge text-balance">{article.title}</h1>
         </div>
-        <h1 className="type-heading-xlarge sm:type-heading-xxlarge mt-2 text-balance">{article.title}</h1>
-        <p className="type-body-large mt-2 text-subtle">{article.excerpt}</p>
-        <p className="type-body-small mt-2 text-subtlest">By {article.author_name}</p>
       </header>
 
-      <div className="container-x mt-6 max-w-6xl">
-        {embed ? (
-          <div className="aspect-video overflow-hidden rounded-xl bg-neutral">
-            <iframe src={embed} title={article.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="size-full" loading="lazy" />
+      <div className="container-x grid gap-6 lg:grid-cols-[12rem_minmax(0,46rem)]">
+        <div className="hidden lg:block" />
+        <div>
+          <p className="type-body-large">{article.excerpt}</p>
+          <div className="mt-8 border-b pb-8">
+            <p className="type-body-small font-medium">Written by {article.author_name}</p>
+            <p className="type-body-small mt-1 text-subtle">
+              {readingTime(article.body)} min read{published && <> · Published on <time dateTime={article.published_at ?? undefined}>{published}</time></>}
+            </p>
           </div>
-        ) : article.cover_image_url ? (
-          <div className="relative aspect-[21/10] overflow-hidden rounded-xl bg-neutral">
-            <Image src={article.cover_image_url} alt="" fill priority sizes="(min-width: 1280px) 1152px, 100vw" className="object-cover" />
-          </div>
-        ) : null}
-      </div>
 
-      <div className="container-x mt-8 grid max-w-6xl gap-8 lg:grid-cols-[1fr_18rem]">
-        <div className="prose-ads max-w-3xl" dangerouslySetInnerHTML={{ __html: renderMarkdown(article.body) }} />
-        <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
-          {article.tags.length > 0 && (
-            <div>
-              <p className="type-heading-xxsmall mb-2 text-subtlest">Tags</p>
-              <div className="flex flex-wrap gap-1">
-                {article.tags.map((t) => (
-                  <span key={t} className="inline-flex h-5 items-center rounded-sm border px-1 text-sm text-default">{t}</span>
-                ))}
-              </div>
+          {embed && (
+            <div className="mt-10 aspect-video overflow-hidden rounded-xl bg-navy-raised">
+              <iframe src={embed} title={article.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="size-full" loading="lazy" />
             </div>
           )}
-          <div className="card p-4">
-            <h2 className="type-heading-small">Paddock Pass</h2>
-            <p className="mt-1 text-sm text-subtle">Get stories like this one in your inbox every race week.</p>
-            <ButtonLink href="/newsletter" appearance="primary" className="mt-3">Subscribe</ButtonLink>
-          </div>
-        </aside>
+
+          <div className="prose-site mt-10" dangerouslySetInnerHTML={{ __html: renderMarkdown(article.body) }} />
+
+          {article.tags.length > 0 && (
+            <ul className="mt-12 flex flex-wrap gap-2" aria-label="Tags">
+              {article.tags.map((t) => (
+                <li key={t} className="inline-flex h-8 items-center rounded-full bg-neutral px-3.5 text-sm">{t}</li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
 
       {related.length > 0 && (
-        <section className="container-x mt-12">
-          <SectionHeading eyebrow="Keep reading" title="Related stories" href="/news" />
-          <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((a) => <ArticleCard key={a.id} article={a} />)}
-          </div>
-        </section>
+        <Carousel title="More Stories" className="mt-24 sm:mt-32">
+          {related.map((a) => <ArticleCard key={a.id} article={a} />)}
+        </Carousel>
       )}
     </article>
   );

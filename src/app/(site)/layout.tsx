@@ -5,7 +5,7 @@ import { buttonClass } from "@/components/ui/button";
 export default function SiteLayout({ children }: LayoutProps<"/">) {
   return (
     <>
-      <a href="#main" className={buttonClass({ appearance: "primary", className: "sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[60]" })}>
+      <a href="#main" className={buttonClass({ appearance: "primary", className: "sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70]" })}>
         Skip to content
       </a>
       <div id="top" />

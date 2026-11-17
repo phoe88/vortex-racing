@@ -21,7 +21,7 @@ const VALID = new Set(ARTICLE_CATEGORIES.map((c) => c.value));
 export default function NewsPage({ searchParams }: PageProps<"/news">) {
   return (
     <>
-      <PageHero eyebrow="Newsroom" title="News & stories" description="Race reports, technical features, team announcements and videos from inside the garage." />
+      <PageHero title="Latest News" description="Race reports, technical features, team announcements and videos from inside the garage." />
       <div className="container-x">
         <Suspense fallback={<CardGridSkeleton count={6} />}>
           <NewsList searchParams={searchParams} />
@@ -43,11 +43,11 @@ async function NewsList({ searchParams }: { searchParams: PageProps<"/news">["se
   ]);
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const makeHref = (p: number) => `/news?${new URLSearchParams({ ...(category ? { category } : {}), ...(p > 1 ? { page: String(p) } : {}) }).toString()}`.replace(/\?$/, "");
+  const [lead, ...others] = articles;
 
   return (
     <>
-      {/* Category tabs */}
-      <nav aria-label="Categories" className="scrollbar-none mb-6 flex gap-1 overflow-x-auto border-b-2">
+      <nav aria-label="Categories" className="scrollbar-none -mx-4 mb-10 flex gap-2 overflow-x-auto px-4">
         {[{ value: null, label: "All" }, ...ARTICLE_CATEGORIES].map((c) => {
           const active = c.value === category;
           return (
@@ -56,8 +56,8 @@ async function NewsList({ searchParams }: { searchParams: PageProps<"/news">["se
               href={c.value ? `/news?category=${c.value}` : "/news"}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "-mb-0.5 shrink-0 border-b-2 px-2 py-2 text-sm font-medium transition-colors -outline-offset-2",
-                active ? "border-selected text-selected" : "border-transparent text-subtle hover:border-bold hover:text-default",
+                "inline-flex h-10 shrink-0 items-center rounded-full px-4 text-sm font-medium transition-colors",
+                active ? "bg-neutral-bold text-inverse" : "bg-neutral hover:bg-neutral-hovered",
               )}
             >
               {c.label}
@@ -66,12 +66,15 @@ async function NewsList({ searchParams }: { searchParams: PageProps<"/news">["se
         })}
       </nav>
       {articles.length === 0 ? (
-        <p className="py-16 text-center text-sm text-subtle">No stories in this category yet.</p>
+        <p className="py-20 text-center text-subtle">No stories in this category yet.</p>
       ) : (
-        <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-          {articles.map((a, i) => (
-            <ArticleCard key={a.id} article={a} variant={i === 0 && page === 1 ? "hero" : "default"} priority={i === 0 && page === 1} className={i === 0 && page === 1 ? "sm:col-span-2 lg:col-span-3" : undefined} />
-          ))}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {page === 1 && lead ? (
+            <ArticleCard article={lead} variant="hero" priority className="min-h-[30rem] sm:col-span-2 lg:col-span-3 lg:min-h-[34rem]" />
+          ) : lead ? (
+            <ArticleCard article={lead} />
+          ) : null}
+          {others.map((a) => <ArticleCard key={a.id} article={a} />)}
         </div>
       )}
       <Pagination page={page} totalPages={totalPages} makeHref={makeHref} />

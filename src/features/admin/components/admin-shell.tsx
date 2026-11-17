@@ -4,7 +4,6 @@ import { Suspense, use, useState } from "react";
 import { ExternalLink, LogOut, Menu, X } from "lucide-react";
 import { AdminNav } from "./admin-nav";
 import { LogoMark } from "@/components/shared/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { Button, buttonClass } from "@/components/ui/button";
 import { Lozenge } from "@/components/ui/lozenge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -16,7 +15,7 @@ export function AdminShell({ userPromise, signOutAction, children }: { userPromi
   const [open, setOpen] = useState(false);
   const sidebar = (
     <>
-      <div className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
+      <div className="flex h-16 shrink-0 items-center gap-2.5 border-b px-4">
         <LogoMark />
         <div className="min-w-0">
           <p className="type-heading-xsmall truncate">{siteConfig.name}</p>
@@ -36,7 +35,6 @@ export function AdminShell({ userPromise, signOutAction, children }: { userPromi
           <Link href="/" target="_blank" className={buttonClass({ className: "min-w-0 flex-1!" })}>
             <ExternalLink className="size-4" aria-hidden /> View site
           </Link>
-          <ThemeToggle />
           <form action={signOutAction}>
             <Button type="submit" appearance="subtle" iconOnly aria-label="Sign out" title="Sign out">
               <LogOut className="size-4" aria-hidden />
@@ -49,11 +47,11 @@ export function AdminShell({ userPromise, signOutAction, children }: { userPromi
 
   return (
     <div className="flex min-h-screen bg-surface">
-      <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r bg-surface lg:flex">{sidebar}</aside>
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r bg-surface-sunken lg:flex">{sidebar}</aside>
       {open && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-blanket" onClick={() => setOpen(false)} />
-          <aside className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-surface-overlay shadow-overlay">
+          <aside className="absolute inset-y-0 left-0 flex w-72 max-w-[85vw] flex-col bg-surface-sunken shadow-overlay">
             <Button appearance="subtle" iconOnly onClick={() => setOpen(false)} aria-label="Close menu" className="absolute right-3 top-3">
               <X className="size-4" aria-hidden />
             </Button>
@@ -62,14 +60,14 @@ export function AdminShell({ userPromise, signOutAction, children }: { userPromi
         </div>
       )}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-40 flex h-14 items-center gap-2 border-b bg-surface px-4 lg:hidden">
+        <header className="sticky top-0 z-40 flex h-16 items-center gap-2 border-b bg-surface-sunken px-4 lg:hidden">
           <Button appearance="subtle" iconOnly onClick={() => setOpen(true)} aria-label="Open menu">
             <Menu className="size-4" aria-hidden />
           </Button>
           <LogoMark />
           <span className="type-heading-xsmall">{siteConfig.shortName} admin</span>
         </header>
-        <main className="flex-1 px-4 py-6 sm:px-8">
+        <main className="flex-1 px-4 py-8 sm:px-10 sm:py-10">
           <Suspense fallback={<PageSkeleton />}>{children}</Suspense>
         </main>
       </div>

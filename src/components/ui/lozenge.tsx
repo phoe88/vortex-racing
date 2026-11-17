@@ -2,9 +2,8 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Lozenge, following the Atlassian Design System lozenge spec: a 20px-tall
- * label at font.body.small with radius.small, used to flag a status or
- * category. Semantic appearances carry meaning; accent appearances only group.
+ * Lozenge: a small pill label for a status or a category. Each appearance has
+ * its own tint so labels can be told apart at a glance, including over photos.
  */
 export type LozengeAppearance =
   | "neutral" | "success" | "warning" | "danger" | "information" | "discovery"
@@ -12,7 +11,7 @@ export type LozengeAppearance =
   | "accent-teal" | "accent-blue" | "accent-purple" | "accent-magenta" | "accent-gray";
 
 const appearances: Record<LozengeAppearance, string> = {
-  neutral: "bg-neutral text-default",
+  neutral: "bg-accent-gray-subtler text-accent-gray-bolder",
   success: "bg-success-subtler text-success-bolder",
   warning: "bg-warning-subtler text-warning-bolder",
   danger: "bg-danger-subtler text-danger-bolder",
@@ -27,7 +26,7 @@ const appearances: Record<LozengeAppearance, string> = {
   "accent-blue": "bg-accent-blue-subtler text-accent-blue-bolder",
   "accent-purple": "bg-accent-purple-subtler text-accent-purple-bolder",
   "accent-magenta": "bg-accent-magenta-subtler text-accent-magenta-bolder",
-  "accent-gray": "bg-accent-gray-subtlest text-accent-gray-bolder",
+  "accent-gray": "bg-accent-gray-subtler text-accent-gray-bolder",
 };
 
 export function Lozenge({
@@ -42,7 +41,7 @@ export function Lozenge({
   return (
     <span
       className={cn(
-        "type-body-small inline-flex h-5 max-w-full shrink-0 items-center gap-1 overflow-hidden whitespace-nowrap rounded-sm px-1",
+        "inline-flex h-6 max-w-full shrink-0 items-center gap-1 overflow-hidden whitespace-nowrap rounded-full px-2.5 text-xs font-medium",
         appearances[appearance],
         className,
       )}

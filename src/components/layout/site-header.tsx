@@ -2,89 +2,105 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Mail, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/shared/logo";
-import { Button, ButtonLink, buttonClass } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { InstagramIcon, XIcon, YoutubeIcon } from "@/components/shared/social-icons";
+import { Button, buttonClass } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-/** Top navigation bar: product mark, primary navigation and global actions. */
+const headerLinks = [...siteConfig.nav.filter((n) => n.href !== "/partners"), { label: "Newsletter", href: "/newsletter" }];
+const menuLinks = [...siteConfig.nav, { label: "Newsletter", href: "/newsletter" }, { label: "Team login", href: "/admin" }];
+
+/**
+ * Top navigation. It floats over the page: transparent at the top, a frosted
+ * bar once the page scrolls. "Menu" opens a full-screen list of every section.
+ */
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [prevPath, setPrevPath] = useState(pathname);
 
-  // Close the mobile menu on navigation (state adjusted during render, not in an effect).
+  // Close the menu on navigation (state adjusted during render, not in an effect).
   if (prevPath !== pathname) {
     setPrevPath(pathname);
     setOpen(false);
   }
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
   }, [open]);
 
-  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
-
   return (
-    <header className="sticky top-0 z-50 border-b bg-surface">
-      <div className="container-x flex h-14 items-center gap-4">
-        <Logo />
-
-        <nav aria-label="Primary" className="hidden flex-1 lg:block">
-          <ul className="flex items-center gap-1">
-            {siteConfig.nav.map((item) => {
-              const active = isActive(item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={active ? "page" : undefined}
-                    className={buttonClass({ appearance: "subtle", isSelected: active })}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        <div className="ml-auto flex items-center gap-2">
-          <ThemeToggle />
-          <ButtonLink href="/newsletter" appearance="primary" className="max-sm:hidden">
-            <Mail className="size-4" aria-hidden /> Newsletter
-          </ButtonLink>
-          <Button
-            appearance="subtle"
-            iconOnly
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="lg:hidden"
-          >
-            {open ? <X className="size-4" aria-hidden /> : <Menu className="size-4" aria-hidden />}
-          </Button>
+    <>
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter] duration-300",
+          scrolled ? "bg-white/20 backdrop-blur-xl" : "bg-transparent",
+        )}
+      >
+        <div className="flex h-[4.875rem] items-center justify-between gap-4 px-4 sm:px-6">
+          <Logo />
+          <div className="flex items-center gap-2">
+            <nav aria-label="Primary" className="hidden lg:block">
+              <ul className="flex items-center">
+                {headerLinks.map((item) => {
+                  const active = pathname === item.href || pathname.startsWith(item.href + "/");
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        aria-current={active ? "page" : undefined}
+                        className="inline-flex h-10 items-center rounded-full px-3 font-medium transition-opacity hover:opacity-70"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+            <Button onClick={() => setOpen(true)} aria-expanded={open} aria-controls="site-menu" className="ml-2">
+              <Menu className="size-4" aria-hidden /> Menu
+            </Button>
+          </div>
         </div>
-      </div>
+      </header>
 
       {open && (
-        <div id="mobile-menu" className="fixed inset-x-0 bottom-0 top-14 overflow-y-auto border-t bg-surface lg:hidden">
-          <nav aria-label="Mobile" className="container-x py-4">
-            <ul className="space-y-1">
-              {siteConfig.nav.map((item) => {
-                const active = isActive(item.href);
+        <div id="site-menu" role="dialog" aria-modal="true" aria-label="Menu" className="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-navy/85 backdrop-blur-2xl">
+          <div className="flex h-[4.875rem] shrink-0 items-center px-4 sm:px-6">
+            <Button onClick={() => setOpen(false)} autoFocus>
+              <X className="size-4" aria-hidden /> Close
+            </Button>
+          </div>
+          <nav aria-label="All sections" className="flex-1 px-4 py-8 sm:px-6 lg:py-12">
+            <ul className="grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-8">
+              {menuLinks.map((item) => {
+                const active = pathname === item.href || pathname.startsWith(item.href + "/");
                 return (
                   <li key={item.href}>
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex h-10 items-center rounded-md px-3 text-sm font-medium transition-colors",
-                        active ? "bg-selected text-selected" : "text-subtle hover:bg-neutral-subtle-hovered active:bg-neutral-subtle-pressed",
+                        "type-heading-xxlarge inline-block font-extrabold transition-colors hover:text-default",
+                        active ? "text-default" : "text-subtle",
                       )}
                     >
                       {item.label}
@@ -93,15 +109,20 @@ export function SiteHeader() {
                 );
               })}
             </ul>
-            <div className="mt-4 flex flex-col gap-2 border-t pt-4">
-              <ButtonLink href="/newsletter" appearance="primary" shouldFitContainer>
-                <Mail className="size-4" aria-hidden /> Join the newsletter
-              </ButtonLink>
-              <ButtonLink href="/admin" shouldFitContainer>Team login</ButtonLink>
-            </div>
           </nav>
+          <div className="flex items-center gap-2 px-4 pb-8 sm:px-6">
+            {[
+              { href: siteConfig.social.x, label: "X", Icon: XIcon },
+              { href: siteConfig.social.instagram, label: "Instagram", Icon: InstagramIcon },
+              { href: siteConfig.social.youtube, label: "YouTube", Icon: YoutubeIcon },
+            ].map(({ href, label, Icon }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className={buttonClass({ iconOnly: true })}>
+                <Icon className="size-4" />
+              </a>
+            ))}
+          </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

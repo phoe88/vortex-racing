@@ -3,40 +3,42 @@ import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Button, following the Atlassian Design System button spec:
- * 32px tall (24px compact), radius.medium, font.body at medium weight, and the
- * default / primary / subtle / warning / danger / discovery appearances.
+ * Pill button. Red for the main action on a view, a glass pill for everything
+ * else, and a borderless subtle variant for quiet actions.
  */
-export type ButtonAppearance = "default" | "primary" | "subtle" | "warning" | "danger" | "discovery";
-type Spacing = "default" | "compact";
+export type ButtonAppearance = "default" | "primary" | "subtle" | "inverse" | "warning" | "danger" | "discovery";
+type Spacing = "default" | "compact" | "large";
 
 const base =
-  "inline-flex shrink-0 cursor-pointer select-none items-center justify-center whitespace-nowrap border text-sm font-medium transition-colors aria-disabled:pointer-events-none disabled:cursor-not-allowed disabled:border-transparent disabled:bg-disabled disabled:text-disabled";
+  "inline-flex shrink-0 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-full font-medium transition-colors aria-disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-disabled disabled:text-disabled";
 
 const appearances: Record<ButtonAppearance, string> = {
-  default: "border-default bg-neutral-subtle text-subtle hover:bg-neutral-subtle-hovered active:bg-neutral-subtle-pressed",
-  primary: "border-transparent bg-brand-bold text-inverse hover:bg-brand-bold-hovered active:bg-brand-bold-pressed",
-  subtle: "border-transparent bg-neutral-subtle text-subtle hover:bg-neutral-subtle-hovered active:bg-neutral-subtle-pressed",
-  warning: "border-transparent bg-warning-bold text-warning-inverse hover:bg-warning-bold-hovered active:bg-warning-bold-pressed",
-  danger: "border-transparent bg-danger-bold text-inverse hover:bg-danger-bold-hovered active:bg-danger-bold-pressed",
-  discovery: "border-transparent bg-discovery-bold text-inverse hover:bg-discovery-bold-hovered active:bg-discovery-bold-pressed",
+  default: "bg-neutral-hovered text-default hover:bg-neutral-pressed active:bg-neutral-pressed",
+  primary: "bg-brand-bold text-default hover:bg-brand-bold-hovered active:bg-brand-bold-pressed",
+  subtle: "bg-neutral-subtle text-default hover:bg-neutral-subtle-hovered active:bg-neutral-subtle-pressed",
+  inverse: "bg-neutral-bold text-inverse hover:bg-neutral-bold-hovered active:bg-neutral-bold-hovered",
+  warning: "bg-warning-bold text-warning-inverse hover:bg-warning-bold-hovered active:bg-warning-bold-pressed",
+  danger: "bg-danger-bold text-default hover:bg-danger-bold-hovered active:bg-danger-bold-pressed",
+  discovery: "bg-discovery-bold text-default hover:bg-discovery-bold-hovered active:bg-discovery-bold-pressed",
 };
 
 const spacings: Record<Spacing, string> = {
-  default: "h-8 gap-1.5 rounded-md px-3",
-  compact: "h-6 gap-1 rounded-sm px-3",
+  compact: "h-8 gap-1.5 px-3.5 text-sm",
+  default: "h-10 gap-2 px-5 text-[1.0625rem]",
+  large: "h-12 gap-2 px-6 text-[1.0625rem]",
 };
 
-/** Square icon-only variants. */
+/** Round icon-only variants. */
 const iconSpacings: Record<Spacing, string> = {
-  default: "size-8 rounded-md",
-  compact: "size-6 rounded-sm",
+  compact: "size-8",
+  default: "size-10",
+  large: "size-12",
 };
 
 type CommonProps = {
   appearance?: ButtonAppearance;
   spacing?: Spacing;
-  /** Marks the button as the current selection (for toggles and navigation). */
+  /** Marks the button as the current selection (for toggles and pagination). */
   isSelected?: boolean;
   /** Stretch to the width of the container. */
   shouldFitContainer?: boolean;
@@ -57,7 +59,7 @@ export function buttonClass({
   return cn(
     base,
     iconOnly ? iconSpacings[spacing] : spacings[spacing],
-    isSelected ? "border-transparent bg-selected text-selected hover:bg-selected-hovered active:bg-selected-pressed" : appearances[appearance],
+    isSelected ? appearances.inverse : appearances[appearance],
     shouldFitContainer && "w-full",
     className,
   );
@@ -86,7 +88,7 @@ export function Button({
   );
 }
 
-/** A link that looks like a button (ADS LinkButton). */
+/** A link that looks like a button. */
 export function ButtonLink({
   appearance,
   spacing,

@@ -5,14 +5,13 @@ import { InstagramIcon, XIcon } from "@/components/shared/social-icons";
 import { getDriverBySlug, getDriverSlugs } from "@/features/drivers/queries";
 import { getDriverStandings } from "@/features/standings/queries";
 import { getArticles } from "@/features/news/queries";
+import { getCurrentCar } from "@/features/cars/queries";
 import { ArticleCard } from "@/components/shared/article-card";
+import { CarShowcase } from "@/components/shared/car-showcase";
 import { DRIVER_ROLE } from "@/components/shared/driver-card";
-import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { buttonClass } from "@/components/ui/button";
-import { Lozenge } from "@/components/ui/lozenge";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { Carousel } from "@/components/ui/carousel";
 import { Reveal } from "@/components/ui/reveal";
-import { darkSubtree } from "@/lib/theme";
 import { flagEmoji, formatDate, formatPoints, ordinal } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
 
@@ -37,104 +36,100 @@ export default async function DriverPage({ params }: PageProps<"/team/[slug]">) 
   const { slug } = await params;
   const driver = await getDriverBySlug(slug);
   if (!driver) notFound();
-  const [standings, stories] = await Promise.all([
+  const [standings, stories, car] = await Promise.all([
     getDriverStandings(),
-    getArticles({ tag: `${driver.first_name} ${driver.last_name}`, limit: 3 }),
+    getArticles({ tag: `${driver.first_name} ${driver.last_name}`, limit: 8 }),
+    driver.role === "race" ? getCurrentCar() : Promise.resolve(null),
   ]);
   const standing = standings.find((s) => s.driver_id === driver.id) ?? null;
-  const name = `${driver.first_name} ${driver.last_name}`;
-  const role = DRIVER_ROLE[driver.role];
 
+  const details: [string, React.ReactNode][] = [
+    ["Date of birth", driver.date_of_birth ? formatDate(driver.date_of_birth) : null],
+    ["Place of birth", driver.place_of_birth],
+    ["Nationality", <><span aria-hidden>{flagEmoji(driver.country_code)}</span> {driver.nationality}</>],
+    ["Role", DRIVER_ROLE[driver.role].label],
+    ["Race number", driver.number != null ? `#${driver.number}` : null],
+    ["Championship", standing ? `${ordinal(standing.position)} · ${formatPoints(standing.points)} pts` : null],
+  ];
   const stats: [string, string | number][] = [
     ["Grands Prix", driver.career_starts],
     ["Wins", driver.career_wins],
     ["Podiums", driver.career_podiums],
     ["Poles", driver.career_poles],
-    ["Career points", formatPoints(driver.career_points)],
-    ["Championships", driver.championships],
+    ["Points", formatPoints(driver.career_points)],
+    ["Titles", driver.championships],
   ];
 
   return (
     <>
-      <section className="container-x pt-4 sm:pt-6">
-        <Breadcrumbs items={[{ label: "Team", href: "/team" }, { label: name }]} />
-        <div className="mt-4 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
-          {/* Profile banner: always dark so the text stays legible over the photograph. */}
-          <div
-            {...darkSubtree}
-            className="relative isolate flex min-h-96 flex-col justify-end overflow-hidden rounded-xl bg-surface-sunken p-4 text-default sm:p-8"
-          >
-            {driver.hero_image_url && (
-              <Image src={driver.hero_image_url} alt="" fill priority sizes="(min-width: 1024px) 60vw, 100vw" className="-z-20 object-cover object-[70%_center]" />
-            )}
-            <div className="media-scrim-soft absolute inset-0 -z-10" />
-            <div className="flex flex-wrap items-center gap-2">
-              <Lozenge appearance={role.appearance}>{role.label}</Lozenge>
-              {driver.number != null && <Lozenge>#{driver.number}</Lozenge>}
-              <span className="text-sm text-subtle">{flagEmoji(driver.country_code)} {driver.nationality}</span>
+      {/* Full-bleed portrait with the name at the bottom */}
+      <section className="relative isolate flex min-h-[92vh] flex-col justify-end overflow-hidden pb-12 pt-40">
+        {(driver.hero_image_url ?? driver.image_url) && (
+          <Image src={(driver.hero_image_url ?? driver.image_url)!} alt="" fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
+        )}
+        <div className="media-scrim-soft absolute inset-0 -z-10" />
+        <div className="container-x grid items-end gap-6 lg:grid-cols-[12rem_1fr]">
+          <div className="relative size-24 overflow-hidden rounded-full border-4 border-white/20 bg-navy-raised sm:size-36">
+            {driver.image_url && <Image src={driver.image_url} alt="" fill sizes="144px" className="object-cover object-top" />}
+          </div>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <h1 className="type-display">
+                <span className="block">{driver.first_name}</span>
+                {driver.last_name}
+              </h1>
+              <p className="mt-4 text-sm"><span aria-hidden>{flagEmoji(driver.country_code)}</span> {driver.nationality} · {DRIVER_ROLE[driver.role].label}</p>
             </div>
-            <h1 className="type-heading-xlarge sm:type-heading-xxlarge mt-2">{name}</h1>
-            {standing && (
-              <p className="mt-1 text-sm font-medium">{ordinal(standing.position)} in the championship · {formatPoints(standing.points)} pts</p>
-            )}
-            {driver.tagline && <p className="type-body-large mt-2 max-w-lg text-subtle">“{driver.tagline}”</p>}
             {(driver.instagram_url || driver.x_url) && (
-              <div className="mt-4 flex gap-1">
-                {driver.instagram_url && (
-                  <a href={driver.instagram_url} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={buttonClass({ iconOnly: true })}>
-                    <InstagramIcon className="size-4" />
-                  </a>
-                )}
-                {driver.x_url && (
-                  <a href={driver.x_url} target="_blank" rel="noopener noreferrer" aria-label="X" className={buttonClass({ iconOnly: true })}>
-                    <XIcon className="size-4" />
-                  </a>
-                )}
+              <div className="flex gap-2">
+                {driver.instagram_url && <a href={driver.instagram_url} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className={buttonClass({ iconOnly: true })}><InstagramIcon className="size-4" /></a>}
+                {driver.x_url && <a href={driver.x_url} target="_blank" rel="noopener noreferrer" aria-label="X" className={buttonClass({ iconOnly: true })}><XIcon className="size-4" /></a>}
               </div>
             )}
           </div>
+        </div>
+      </section>
 
-          <Reveal className="card p-4 sm:p-6">
-            <h2 className="type-heading-small">Career stats</h2>
-            <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4">
+      <section className="container-x mt-12 grid gap-6 border-t pt-12 lg:grid-cols-[12rem_minmax(0,46rem)]">
+        <div className="hidden lg:block" />
+        <div>
+          {driver.tagline && <p className="type-heading-large">{driver.tagline}</p>}
+          <dl className="card mt-10 grid grid-cols-2 gap-x-6 gap-y-6 p-6 sm:grid-cols-3 sm:p-8">
+            {details.filter(([, v]) => v).map(([k, v]) => (
+              <div key={k}>
+                <dt className="type-body-small text-subtle">{k}</dt>
+                <dd className="mt-1 font-medium">{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <Reveal>
+            <h2 className="type-heading-medium mt-16">Career in numbers</h2>
+            <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
               {stats.map(([k, v]) => (
-                <div key={k} className="border-t pt-2">
-                  <dt className="type-body-small text-subtle">{k}</dt>
-                  <dd className="type-metric-medium tabular-nums">{v}</dd>
+                <div key={k} className="card p-5">
+                  <dt className="text-xs font-medium uppercase tracking-[0.12em] text-subtle">{k}</dt>
+                  <dd className="type-metric-large mt-2 tabular-nums">{v}</dd>
                 </div>
               ))}
             </dl>
-            {(driver.date_of_birth || driver.place_of_birth) && (
-              <dl className="mt-4 grid grid-cols-2 gap-x-4 border-t pt-3 text-sm">
-                {driver.date_of_birth && <div><dt className="type-body-small text-subtle">Born</dt><dd>{formatDate(driver.date_of_birth)}</dd></div>}
-                {driver.place_of_birth && <div><dt className="type-body-small text-subtle">From</dt><dd>{driver.place_of_birth}</dd></div>}
-              </dl>
-            )}
           </Reveal>
-        </div>
-      </section>
-
-      <section className="container-x grid gap-8 py-8 lg:grid-cols-[1fr_20rem]">
-        <div>
-          <h2 className="type-heading-large mb-3">Biography</h2>
-          <div className="prose-ads max-w-3xl">
+          <div className="prose-site mt-16">
             {driver.bio.split(/\n{2,}/).map((p, i) => <p key={i}>{p}</p>)}
           </div>
         </div>
-        {driver.image_url && (
-          <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-neutral">
-            <Image src={driver.image_url} alt={name} fill sizes="(min-width: 1024px) 20rem, 100vw" className="object-cover object-top" />
-          </div>
-        )}
       </section>
 
-      {stories.length > 0 && (
-        <section className="container-x pt-4">
-          <SectionHeading eyebrow="In the news" title={`${driver.first_name}'s latest`} href="/news" />
-          <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {stories.map((a) => <ArticleCard key={a.id} article={a} />)}
-          </div>
+      {car && (
+        <section className="container-x mt-24 sm:mt-32">
+          <h2 className="type-heading-xlarge mb-6">Driven Cars</h2>
+          <CarShowcase car={car} />
         </section>
+      )}
+
+      {stories.length > 0 && (
+        <Carousel title={`${driver.first_name} in the News`} className="mt-24 sm:mt-32">
+          {stories.map((a) => <ArticleCard key={a.id} article={a} />)}
+        </Carousel>
       )}
     </>
   );
