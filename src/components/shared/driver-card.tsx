@@ -64,7 +64,8 @@ export function DriverCard({
           <span className="absolute left-4 top-3 text-7xl font-extrabold italic leading-none text-red drop-shadow-lg">{driver.number}</span>
         )}
         <Lozenge appearance={DRIVER_ROLE[driver.role].appearance} className="absolute right-4 top-4">{DRIVER_ROLE[driver.role].label}</Lozenge>
-        <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
+        {/* Name above the career highlights on every card, whatever the name length */}
+        <div className="flex flex-col items-start gap-3">
           <h3 className="text-[2rem] font-extrabold leading-[1.05]">
             <span className="block">{driver.first_name}</span>
             {driver.last_name}
