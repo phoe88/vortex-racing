@@ -23,7 +23,7 @@ const sections: FormSection[] = [
     fields: [
       { name: "image_url", label: "Portrait (3:4)", type: "image", folder: "drivers", hint: "Used for the profile avatar." },
       { name: "card_image_url", label: "Card photo (3:4)", type: "image", folder: "drivers", hint: "Shown on driver cards. Leave empty to use the portrait." },
-      { name: "hero_image_url", label: "Profile hero (wide)", type: "image", folder: "drivers" },
+      { name: "hero_image_url", label: "Profile hero (wide)", type: "image", folder: "drivers", hint: "Banner behind the name on the profile page. Leave empty for a plain black banner." },
       { name: "helmet_image_url", label: "Helmet", type: "image", folder: "drivers" },
       { name: "instagram_url", label: "Instagram URL", type: "url" },
       { name: "x_url", label: "X URL", type: "url" },

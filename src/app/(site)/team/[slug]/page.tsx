@@ -12,7 +12,7 @@ import { DRIVER_ROLE } from "@/components/shared/driver-card";
 import { buttonClass } from "@/components/ui/button";
 import { Carousel } from "@/components/ui/carousel";
 import { Reveal } from "@/components/ui/reveal";
-import { flagEmoji, formatDate, formatPoints, ordinal } from "@/lib/utils";
+import { cn, flagEmoji, formatDate, formatPoints, ordinal } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
 
 export async function generateStaticParams() {
@@ -62,10 +62,10 @@ export default async function DriverPage({ params }: PageProps<"/team/[slug]">) 
 
   return (
     <>
-      {/* Full-bleed portrait with the name at the bottom */}
-      <section className="relative isolate flex min-h-[92vh] flex-col justify-end overflow-hidden pb-12 pt-40">
-        {(driver.hero_image_url ?? driver.image_url) && (
-          <Image src={(driver.hero_image_url ?? driver.image_url)!} alt="" fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
+      {/* Full-bleed banner photo with the name at the bottom; plain black when the driver has no banner photo */}
+      <section className={cn("relative isolate flex min-h-[92vh] flex-col justify-end overflow-hidden pb-12 pt-40", !driver.hero_image_url && "bg-black")}>
+        {driver.hero_image_url && (
+          <Image src={driver.hero_image_url} alt="" fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
         )}
         <div className="media-scrim-soft absolute inset-0 -z-10" />
         <div className="container-x grid items-end gap-6 lg:grid-cols-[12rem_1fr]">

@@ -81,6 +81,7 @@
   --color-navy-deep: var(--navy-deep);
   --color-navy-raised: var(--navy-raised);
   --color-white: var(--white);
+  --color-black: #000000;
   --color-red: var(--red);
   --color-line: var(--line);
   --color-surface: var(--navy);
