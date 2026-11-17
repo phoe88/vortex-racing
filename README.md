@@ -132,7 +132,7 @@ The site is styled as a premium motorsport team site: a deep navy stage, white t
 
 * **Tokens.** Every colour, radius and shadow is defined once at the top of `src/app/globals.css`. Tailwind's own palette is removed, so only these tokens are available as utilities: `bg-surface`, `bg-surface-raised` (glass), `text-subtle`, `bg-brand-bold` (red), `border-default` and so on.
 * **Type.** Lexend, loaded with `next/font`, from 400 to 800 weight. The scale runs from `type-body-small` up to `type-display-xl` and `type-mega`, the giant car names.
-* **Layout patterns.** A floating header that frosts on scroll with a full-screen menu; a photo mosaic of lead stories; glass widgets for standings and the next race with a live session countdown; scrolling rails with round arrow buttons; tilted driver cards; car names set enormous with the number in red; a red-glow newsletter block; and a footer partner wall.
+* **Layout patterns.** A floating header that frosts on scroll with a full-screen menu; a photo mosaic of lead stories; glass widgets for standings and the next race with a live session countdown; scrolling rails with round arrow buttons; tilted driver cards; car names set enormous with the number in red; and a red-glow newsletter block whose benefits link to the Paddock Pass pages.
 * **Components.** `src/components/ui` holds the pill button, lozenge, form fields, carousel, section message and skeleton. Page-level pieces such as the article, driver and race cards, the car showcase and the newsletter block are in `src/components/shared`.
 * **Category colours.** Each article category has its own lozenge colour in `src/features/news/categories.ts`.
 
