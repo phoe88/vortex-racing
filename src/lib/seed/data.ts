@@ -47,7 +47,7 @@ Nakamura is a qualifying specialist: smooth inputs, immaculate tyre preparation 
 
 He is studying aeronautical engineering part-time and spends his winters cycling in the Japanese Alps.`,
     date_of_birth: "2004-09-02", place_of_birth: "Nagoya, Japan",
-    image_url: unsplash(IMG.helmetPortrait, 1200), hero_image_url: unsplash(IMG.cockpitSeated, 2000),
+    image_url: "/images/drivers/kai-nakamura.webp", hero_image_url: unsplash(IMG.cockpitSeated, 2000),
     helmet_image_url: null, instagram_url: "https://instagram.com", x_url: "https://x.com",
     career_starts: 18, career_wins: 1, career_podiums: 4, career_poles: 2, career_points: 176,
     championships: 0, is_active: true, sort_order: 2, ...stamp("2025-12-01T00:00:00Z"),
