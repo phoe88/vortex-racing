@@ -103,9 +103,9 @@ export function Carousel({
     const el = rail.current;
     const t = track.current;
     if (!el || !t || (e.pointerType === "mouse" && e.button !== 0)) return;
+    // Stops text selection and keeps mouse focus off the bar, so no focus ring appears while
+    // dragging. Keyboard users reach the bar with Tab, which does show the ring.
     e.preventDefault();
-    // preventDefault stops the browser focusing the bar, so focus it here for keyboard use.
-    t.focus({ preventScroll: true });
     const rect = t.getBoundingClientRect();
     const max = el.scrollWidth - el.clientWidth;
     const thumbPx = state.thumbWidth * rect.width;
