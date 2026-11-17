@@ -90,7 +90,7 @@ export function RowsEditor({
                 {columns.map((c) => (
                   <td key={c.key} className="px-1 py-1">
                     {c.type === "checkbox" ? (
-                      <input type="checkbox" checked={Boolean(r[c.key])} onChange={(e) => update(i, c.key, e.target.checked)} className="size-4 cursor-pointer rounded-xs accent-(--ds-background-selected-bold)" aria-label={c.label} />
+                      <input type="checkbox" checked={Boolean(r[c.key])} onChange={(e) => update(i, c.key, e.target.checked)} className="size-4 cursor-pointer rounded-xs accent-(--red)" aria-label={c.label} />
                     ) : (
                       <Input
                         type={c.type === "number" ? "number" : "text"}
