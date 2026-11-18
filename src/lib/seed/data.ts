@@ -32,7 +32,7 @@ Known for a brutally late braking style and an almost telepathic feel for tyre d
 
 Away from the track he restores vintage motorcycles and is a vocal supporter of grassroots karting in northern Italy.`,
     date_of_birth: "1999-04-18", place_of_birth: "Bergamo, Italy",
-    image_url: "/images/drivers/luca-moretti.webp", card_image_url: "/images/drivers/luca-moretti-card.webp", hero_image_url: "/images/drivers/luca-moretti-banner.webp",
+    image_url: "/images/drivers/luca-moretti-portrait.webp", card_image_url: "/images/drivers/luca-moretti-portrait.webp", hero_image_url: "/images/drivers/luca-moretti-banner.webp",
     helmet_image_url: null, instagram_url: "https://instagram.com", x_url: "https://x.com",
     career_starts: 78, career_wins: 7, career_podiums: 23, career_poles: 5, career_points: 812.5,
     championships: 0, is_active: true, sort_order: 1, ...stamp("2023-01-10T00:00:00Z"),
