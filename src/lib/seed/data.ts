@@ -60,7 +60,7 @@ He is studying aeronautical engineering part-time and spends his winters cycling
 
 Voss made two race starts for the team in 2025 as a stand-in, scoring points on both occasions.`,
     date_of_birth: "1996-01-27", place_of_birth: "Stuttgart, Germany",
-    image_url: unsplash(IMG.driverInCar, 1200), card_image_url: null, hero_image_url: unsplash(IMG.driverBlueSuit, 2000),
+    image_url: unsplash(IMG.driverInCar, 1200), card_image_url: unsplash(IMG.racerFlameJacket, 1200), hero_image_url: unsplash(IMG.driverBlueSuit, 2000),
     helmet_image_url: null, instagram_url: "https://instagram.com", x_url: null,
     career_starts: 2, career_wins: 0, career_podiums: 0, career_poles: 0, career_points: 14,
     championships: 0, is_active: true, sort_order: 3, ...stamp("2024-02-01T00:00:00Z"),
@@ -71,7 +71,7 @@ Voss made two race starts for the team in 2025 as a stand-in, scoring points on 
     tagline: "The next one through the door.",
     bio: `Tomás Ferreira is the senior member of the Vortex Academy and the reigning Formula 3 champion. He races in Formula 2 in 2026 and drives for the team in young-driver tests.`,
     date_of_birth: "2007-05-11", place_of_birth: "Curitiba, Brazil",
-    image_url: unsplash(IMG.driverWave, 1200), card_image_url: null, hero_image_url: unsplash(IMG.driverTrophy, 2000),
+    image_url: unsplash(IMG.driverWave, 1200), card_image_url: unsplash(IMG.driverRedSuit, 1200), hero_image_url: unsplash(IMG.driverTrophy, 2000),
     helmet_image_url: null, instagram_url: "https://instagram.com", x_url: null,
     career_starts: 0, career_wins: 0, career_podiums: 0, career_poles: 0, career_points: 0,
     championships: 0, is_active: true, sort_order: 4, ...stamp("2025-06-01T00:00:00Z"),
