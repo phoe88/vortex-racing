@@ -259,7 +259,7 @@ export const cars: CarRow[] = [
     description: `The VR-26 is the product of a clean-sheet aerodynamic philosophy led by Technical Director Daniel Okafor. A radical sidepod undercut feeds a reprofiled floor, while a new pull-rod front suspension frees airflow to the leading edge of the venturi tunnels.
 
 Mechanically, the car runs a lighter gearbox casing and a revised cooling layout that allowed the engineers to close the bodywork by 40 mm across the rear. The result is a car that is kinder to its rear tyres in traffic and markedly stronger in high-speed corners than its predecessor.`,
-    image_url: unsplash(IMG.darkCar, 1600), hero_image_url: unsplash(IMG.garageRear, 2000),
+    image_url: "/images/cars/vr-26.webp", hero_image_url: "/images/cars/vr-26.webp",
     specs: [
       { group: "Power unit", label: "Engine", value: "1.6L V6 turbo hybrid" },
       { group: "Power unit", label: "Max RPM", value: "15,000" },
@@ -285,7 +285,7 @@ Mechanically, the car runs a lighter gearbox casing and a revised cooling layout
     power_unit: "Vortex-Halcyon VH-6 1.6L V6 turbo hybrid",
     tagline: "The breakthrough.",
     description: `The VR-25 delivered the team's first win in five years at Monaco and finished third in the Constructors' standings. Its high-rake concept proved strong on street circuits but struggled with porpoising on smoother tracks early in the season until a floor update in Barcelona.`,
-    image_url: unsplash(IMG.yellowCar, 1600), hero_image_url: unsplash(IMG.carsCurbs, 2000),
+    image_url: "/images/cars/vr-25.webp", hero_image_url: "/images/cars/vr-25.webp",
     specs: [
       { group: "Power unit", label: "Engine", value: "1.6L V6 turbo hybrid" },
       { group: "Power unit", label: "MGU-K power", value: "120 kW" },
@@ -303,7 +303,7 @@ Mechanically, the car runs a lighter gearbox casing and a revised cooling layout
     power_unit: "Vortex-Halcyon VH-5 1.6L V6 turbo hybrid",
     tagline: "The foundation.",
     description: `A transitional car that introduced the team's current suspension architecture. It scored points in 19 of 24 races and finished fifth in the Constructors' standings.`,
-    image_url: unsplash(IMG.blueWhiteCar, 1600), hero_image_url: unsplash(IMG.redYellowCar, 2000),
+    image_url: "/images/cars/vr-24.webp", hero_image_url: "/images/cars/vr-24.webp",
     specs: [
       { group: "Power unit", label: "Engine", value: "1.6L V6 turbo hybrid" },
       { group: "Dimensions", label: "Minimum weight", value: "798 kg" },

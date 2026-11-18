@@ -13,13 +13,10 @@ export function unsplashFace(id: string, size = 400) {
 
 export const IMG = {
   gridLineup: "1659203206829-218b9b5930e5",
-  darkCar: "1614949194403-9602bdc14a3a",
-  yellowCar: "1610905376670-5e7e0e8a3cfb",
   redYellowCar: "1632726144626-6f6a8876e35d",
   crowdBlur: "1744841332448-f4a2d6011202",
   carsCurbs: "1652090379496-4219a00c8ebf",
   streetCircuit: "1623258406180-df4c68d0798f",
-  garageRear: "1625905928324-577cf7f94ac4",
   redGrid: "1631392426516-affff6b1d41c",
   spaCars: "1773142181818-5842662aea51",
   blueWhiteCar: "1674154634776-acd0fc94ab71",
