@@ -26,11 +26,11 @@ export const drivers: DriverRow[] = [
     id: uid("d0000000", 1), slug: "nesyah-rodriguez", first_name: "Nesyah", last_name: "Rodriguez",
     number: 27, nationality: "Italian", country_code: "IT", role: "race",
     tagline: "Late on the brakes, early on the throttle.",
-    bio: `Nesyah Rodriguez joined Vortex Racing in 2023 after two seasons in Formula 2, where he took the vice-championship with six wins. Raised in Bergamo, he started karting at six and was a European junior champion by fourteen.
+    bio: `Nesyah Rodriguez joined Vortex Racing in 2023 after two seasons in Formula 2, where she took the vice-championship with six wins. Raised in Bergamo, she started karting at six and was a European junior champion by fourteen.
 
-Known for a brutally late braking style and an almost telepathic feel for tyre degradation, Rodriguez has become the reference point in the garage for race-day set-up. His maiden victory at Monaco in 2025 came from fourth on the grid, with a one-stop strategy the pit wall still talks about.
+Known for a brutally late braking style and an almost telepathic feel for tyre degradation, Rodriguez has become the reference point in the garage for race-day set-up. Her maiden victory at Monaco in 2025 came from fourth on the grid, with a one-stop strategy the pit wall still talks about.
 
-Away from the track he restores vintage motorcycles and is a vocal supporter of grassroots karting in northern Italy.`,
+Away from the track she restores vintage motorcycles and is a vocal supporter of grassroots karting in northern Italy.`,
     date_of_birth: "1999-04-18", place_of_birth: "Bergamo, Italy",
     image_url: "/images/drivers/nesyah-rodriguez-portrait.webp", card_image_url: "/images/drivers/nesyah-rodriguez-portrait.webp", hero_image_url: "/images/drivers/nesyah-rodriguez-banner.webp",
     helmet_image_url: null, instagram_url: "https://instagram.com", x_url: "https://x.com",
@@ -341,7 +341,7 @@ const ARTICLES: ArticleSeed[] = [
   {
     slug: "rodriguez-takes-sao-paulo-podium-in-the-rain",
     title: "Rodriguez holds off Reyes for a rain-soaked São Paulo podium",
-    excerpt: "A late switch to intermediates and 14 laps of defending gave Nesyah Rodriguez his seventh podium of the season at Interlagos.",
+    excerpt: "A late switch to intermediates and 14 laps of defending gave Nesyah Rodriguez her seventh podium of the season at Interlagos.",
     category: "race-report", tags: ["Interlagos", "Nesyah Rodriguez", "Race report"], is_featured: true,
     cover_image_url: "/images/news/rodriguez-sao-paulo-podium.webp", published_at: "2026-11-08T21:30:00Z",
     body: `Interlagos delivered, as it always does. After a dry opening stint that saw Nesyah Rodriguez run a comfortable fourth, the rain arrived on lap 44 and turned the São Paulo Grand Prix into a strategy lottery.
@@ -473,11 +473,11 @@ Rodriguez sits second in the Drivers' standings. With three races left, every po
   {
     slug: "behind-the-visor-rodriguez-video",
     title: "Behind the visor: a lap of Monaco with Nesyah Rodriguez",
-    excerpt: "Onboard with commentary from the man himself on the lap that won the 2025 Monaco Grand Prix.",
+    excerpt: "Onboard with commentary from the woman herself on the lap that won the 2025 Monaco Grand Prix.",
     category: "video", tags: ["Video", "Monaco", "Onboard"],
     cover_image_url: unsplash(IMG.glovesWheel, 1800), published_at: "2026-06-03T16:00:00Z",
     video_url: "https://www.youtube.com/watch?v=Aw0L44rj364",
-    body: `Ahead of this year's Monaco Grand Prix, Nesyah Rodriguez talks us through his pole lap from 2025, corner by corner. From the commitment through Casino Square to the "hold your breath" moment at the Swimming Pool, this is what a lap of the Principality feels like from the cockpit.`,
+    body: `Ahead of this year's Monaco Grand Prix, Nesyah Rodriguez talks us through her pole lap from 2025, corner by corner. From the commitment through Casino Square to the "hold your breath" moment at the Swimming Pool, this is what a lap of the Principality feels like from the cockpit.`,
   },
   {
     slug: "fan-zone-silverstone-2026",
