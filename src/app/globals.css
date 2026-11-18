@@ -36,11 +36,6 @@
   --red-hovered: #f01d54;
   --red-pressed: #b80835;
 
-  /* Racing blue: livery accents on driver cards */
-  --racing-blue: #1f5bff;
-  --racing-blue-hover: #3a70ff;
-  --racing-blue-deep: #0a2a8c;
-
   /* Status and category colours */
   --accent-red: #FF5C5C;
   --accent-red-text: #FFB3B3;
@@ -88,9 +83,6 @@
   --color-white: var(--white);
   --color-black: #000000;
   --color-red: var(--red);
-  --color-racing-blue: var(--racing-blue);
-  --color-racing-blue-hover: var(--racing-blue-hover);
-  --color-racing-blue-deep: var(--racing-blue-deep);
   --color-line: var(--line);
   --color-surface: var(--navy);
 
@@ -453,34 +445,6 @@
     color-mix(in oklab, var(--navy) 18%, transparent) 58%,
     transparent 100%
   );
-}
-
-/* Driver card photo fade: deep navy at the bottom, a hint of racing blue higher up. */
-@utility livery-scrim {
-  background-image: linear-gradient(
-    to top,
-    var(--navy-deep) 0%,
-    color-mix(in oklab, var(--navy-deep) 85%, transparent) 24%,
-    color-mix(in oklab, var(--racing-blue-deep) 40%, transparent) 55%,
-    transparent 100%
-  );
-}
-
-/* Diagonal red and blue speed lines that fade out from the corner. */
-@utility speed-lines {
-  background-image: repeating-linear-gradient(
-    -60deg,
-    var(--red) 0 3px,
-    transparent 3px 11px,
-    var(--racing-blue) 11px 14px,
-    transparent 14px 22px
-  );
-  mask-image: linear-gradient(to bottom right, black 0%, transparent 65%);
-}
-
-/* Red, white and blue livery band. */
-@utility livery-stripe {
-  background-image: linear-gradient(90deg, var(--red) 0 42%, var(--white) 42% 54%, var(--racing-blue) 54% 100%);
 }
 
 /* Red wash behind the "get closer" block. */
