@@ -29,6 +29,7 @@ export const IMG = {
   aerialKart: "1768070855525-f27ebd8c46ef",
   driverRedSuit: "1761751237853-7489598b7498",
   racerFlameJacket: "1645375288944-e7a4d183b106",
+  redCarDark: "1762314908735-6c7fab306f86",
   garageHelmets: "1761751237616-df7e2f9211d8",
   driverInCar: "1552255440-ac1fa0a5b2a3",
   garageSilhouettes: "1765202661219-cec5ad98f324",
