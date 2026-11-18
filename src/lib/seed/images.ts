@@ -6,6 +6,11 @@ export function unsplash(id: string, w = 1600) {
   return `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
 }
 
+/** Square crop centred on the face (or the middle when no face is found), for round profile pictures. */
+export function unsplashFace(id: string, size = 400) {
+  return `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&crop=faces,center&w=${size}&h=${size}&q=80`;
+}
+
 export const IMG = {
   gridLineup: "1659203206829-218b9b5930e5",
   darkCar: "1614949194403-9602bdc14a3a",
