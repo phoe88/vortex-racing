@@ -23,16 +23,16 @@ const stamp = (iso: string) => ({ created_at: iso, updated_at: iso });
 // ─── Drivers ────────────────────────────────────────────────────────────────
 export const drivers: DriverRow[] = [
   {
-    id: uid("d0000000", 1), slug: "luca-moretti", first_name: "Luca", last_name: "Moretti",
+    id: uid("d0000000", 1), slug: "nesyah-rodriguez", first_name: "Nesyah", last_name: "Rodriguez",
     number: 27, nationality: "Italian", country_code: "IT", role: "race",
     tagline: "Late on the brakes, early on the throttle.",
-    bio: `Luca Moretti joined Vortex Racing in 2023 after two seasons in Formula 2, where he took the vice-championship with six wins. Raised in Bergamo, he started karting at six and was a European junior champion by fourteen.
+    bio: `Nesyah Rodriguez joined Vortex Racing in 2023 after two seasons in Formula 2, where he took the vice-championship with six wins. Raised in Bergamo, he started karting at six and was a European junior champion by fourteen.
 
-Known for a brutally late braking style and an almost telepathic feel for tyre degradation, Moretti has become the reference point in the garage for race-day set-up. His maiden victory at Monaco in 2025 came from fourth on the grid, with a one-stop strategy the pit wall still talks about.
+Known for a brutally late braking style and an almost telepathic feel for tyre degradation, Rodriguez has become the reference point in the garage for race-day set-up. His maiden victory at Monaco in 2025 came from fourth on the grid, with a one-stop strategy the pit wall still talks about.
 
 Away from the track he restores vintage motorcycles and is a vocal supporter of grassroots karting in northern Italy.`,
     date_of_birth: "1999-04-18", place_of_birth: "Bergamo, Italy",
-    image_url: "/images/drivers/luca-moretti-portrait.webp", card_image_url: "/images/drivers/luca-moretti-portrait.webp", hero_image_url: "/images/drivers/luca-moretti-banner.webp",
+    image_url: "/images/drivers/nesyah-rodriguez-portrait.webp", card_image_url: "/images/drivers/nesyah-rodriguez-portrait.webp", hero_image_url: "/images/drivers/nesyah-rodriguez-banner.webp",
     helmet_image_url: null, instagram_url: "https://instagram.com", x_url: "https://x.com",
     career_starts: 78, career_wins: 7, career_podiums: 23, career_poles: 5, career_points: 812.5,
     championships: 0, is_active: true, sort_order: 1, ...stamp("2023-01-10T00:00:00Z"),
@@ -83,7 +83,7 @@ export const teamMembers: TeamMemberRow[] = [
   { name: "Mara Lindqvist", role_title: "Team Principal", bio: "Joined as Head of Strategy in 2016 and took over the team in 2021. Oversaw the move to the Silverstone campus and the launch of the Vortex Academy." },
   { name: "Daniel Okafor", role_title: "Technical Director", bio: "Aerodynamicist by trade. Led the VR-26 concept, including the sidepod undercut that defines the car's look." },
   { name: "Priya Raman", role_title: "Head of Race Strategy", bio: "Runs the pit wall. Known for aggressive undercuts and an encyclopaedic memory for tyre data." },
-  { name: "Sebastian Kuhn", role_title: "Chief Race Engineer", bio: "Race engineer to Luca Moretti since 2023." },
+  { name: "Sebastian Kuhn", role_title: "Chief Race Engineer", bio: "Race engineer to Nesyah Rodriguez since 2023." },
   { name: "Aiko Tanaka", role_title: "Head of Vortex Academy", bio: "Former single-seater racer who built the junior programme from scratch in 2022." },
   { name: "Grace Mbeki", role_title: "Chief Operating Officer", bio: "Keeps 640 people, two trucks and one wind tunnel moving in the same direction." },
 ].map((m, i) => ({
@@ -94,7 +94,7 @@ export const teamMembers: TeamMemberRow[] = [
 // ─── Rival grid (for results & standings) ──────────────────────────────────
 type GridEntry = { name: string; team: string; cc: string; pace: number; driverId?: string };
 const GRID: GridEntry[] = [
-  { name: "Luca Moretti", team: TEAM, cc: "IT", pace: 96, driverId: drivers[0].id },
+  { name: "Nesyah Rodriguez", team: TEAM, cc: "IT", pace: 96, driverId: drivers[0].id },
   { name: "Kai Nakamura", team: TEAM, cc: "JP", pace: 91, driverId: drivers[1].id },
   { name: "Mateo Reyes", team: "Meridian GP", cc: "ES", pace: 98 },
   { name: "Henrik Dahl", team: "Meridian GP", cc: "DK", pace: 93 },
@@ -339,26 +339,26 @@ type ArticleSeed = Omit<ArticleRow, "id" | "created_at" | "updated_at" | "status
 
 const ARTICLES: ArticleSeed[] = [
   {
-    slug: "moretti-takes-sao-paulo-podium-in-the-rain",
-    title: "Moretti holds off Reyes for a rain-soaked São Paulo podium",
-    excerpt: "A late switch to intermediates and 14 laps of defending gave Luca Moretti his seventh podium of the season at Interlagos.",
-    category: "race-report", tags: ["Interlagos", "Luca Moretti", "Race report"], is_featured: true,
-    cover_image_url: "/images/news/moretti-sao-paulo-podium.webp", published_at: "2026-11-08T21:30:00Z",
-    body: `Interlagos delivered, as it always does. After a dry opening stint that saw Luca Moretti run a comfortable fourth, the rain arrived on lap 44 and turned the São Paulo Grand Prix into a strategy lottery.
+    slug: "rodriguez-takes-sao-paulo-podium-in-the-rain",
+    title: "Rodriguez holds off Reyes for a rain-soaked São Paulo podium",
+    excerpt: "A late switch to intermediates and 14 laps of defending gave Nesyah Rodriguez his seventh podium of the season at Interlagos.",
+    category: "race-report", tags: ["Interlagos", "Nesyah Rodriguez", "Race report"], is_featured: true,
+    cover_image_url: "/images/news/rodriguez-sao-paulo-podium.webp", published_at: "2026-11-08T21:30:00Z",
+    body: `Interlagos delivered, as it always does. After a dry opening stint that saw Nesyah Rodriguez run a comfortable fourth, the rain arrived on lap 44 and turned the São Paulo Grand Prix into a strategy lottery.
 
 ## The call
 
-Head of Race Strategy Priya Raman had already positioned Moretti for a late stop. When the first drops hit the Senna S, the pit wall committed to intermediates a lap before the leaders. "We lost two seconds on the in-lap and gained eleven on the out-lap," Raman said afterwards. "Those are the laps you win races on."
+Head of Race Strategy Priya Raman had already positioned Rodriguez for a late stop. When the first drops hit the Senna S, the pit wall committed to intermediates a lap before the leaders. "We lost two seconds on the in-lap and gained eleven on the out-lap," Raman said afterwards. "Those are the laps you win races on."
 
-Moretti rejoined second behind Oliver Hart and ahead of Mateo Reyes, who had stayed out one lap too long.
+Rodriguez rejoined second behind Oliver Hart and ahead of Mateo Reyes, who had stayed out one lap too long.
 
 ## Fourteen laps of defence
 
-What followed was a masterclass in managing a car on a drying-then-wetting track. Reyes had the fresher tyres and the DRS, but Moretti used every centimetre of the kerb exiting Juncão to hold the inside line into Turn 1.
+What followed was a masterclass in managing a car on a drying-then-wetting track. Reyes had the fresher tyres and the DRS, but Rodriguez used every centimetre of the kerb exiting Juncão to hold the inside line into Turn 1.
 
-> "I could see him in both mirrors for fourteen laps. You just focus on your own braking points and let him make the mistake." — Luca Moretti
+> "I could see him in both mirrors for fourteen laps. You just focus on your own braking points and let him make the mistake." — Nesyah Rodriguez
 
-Reyes never made it. Moretti crossed the line 0.8 seconds clear to take second place and 18 points, cutting the gap in the Drivers' Championship.
+Reyes never made it. Rodriguez crossed the line 0.8 seconds clear to take second place and 18 points, cutting the gap in the Drivers' Championship.
 
 ## Nakamura's recovery
 
@@ -388,7 +388,7 @@ The new floor reprofiled the venturi tunnel inlets and added a series of vortex 
 
 ## The result
 
-Since Barcelona, Moretti and Nakamura have scored 73 per cent of the team's points. "The lap time gain was modest," Okafor says. "The consistency gain was everything."`,
+Since Barcelona, Rodriguez and Nakamura have scored 73 per cent of the team's points. "The lap time gain was modest," Okafor says. "The consistency gain was everything."`,
   },
   {
     slug: "nakamura-first-win-suzuka",
@@ -439,10 +439,10 @@ The expanded agreement moves the team's entire simulation workload onto Halcyon 
   {
     slug: "pit-stop-record-silverstone",
     title: "1.92 seconds: how the crew set a new team pit-stop record",
-    excerpt: "A frame-by-frame breakdown of the British Grand Prix stop that gained Moretti track position.",
+    excerpt: "A frame-by-frame breakdown of the British Grand Prix stop that gained Rodriguez track position.",
     category: "feature", tags: ["Pit crew", "Silverstone"],
     cover_image_url: "/images/news/pit-stop-record.webp", published_at: "2026-07-08T10:00:00Z",
-    body: `Twenty-two people, four wheels, 1.92 seconds. The stop on lap 31 of the British Grand Prix was the fastest in the team's history and the one that put Luca Moretti ahead of Oliver Hart for the final stint.
+    body: `Twenty-two people, four wheels, 1.92 seconds. The stop on lap 31 of the British Grand Prix was the fastest in the team's history and the one that put Nesyah Rodriguez ahead of Oliver Hart for the final stint.
 
 ## The breakdown
 
@@ -468,16 +468,16 @@ The VR-26's strength in high-speed corners is less of an asset here, but the tea
 
 ## The championship
 
-Moretti sits second in the Drivers' standings. With three races left, every point counts. "We go there to win," said Mara Lindqvist. "Anything else is maths."`,
+Rodriguez sits second in the Drivers' standings. With three races left, every point counts. "We go there to win," said Mara Lindqvist. "Anything else is maths."`,
   },
   {
-    slug: "behind-the-visor-moretti-video",
-    title: "Behind the visor: a lap of Monaco with Luca Moretti",
+    slug: "behind-the-visor-rodriguez-video",
+    title: "Behind the visor: a lap of Monaco with Nesyah Rodriguez",
     excerpt: "Onboard with commentary from the man himself on the lap that won the 2025 Monaco Grand Prix.",
     category: "video", tags: ["Video", "Monaco", "Onboard"],
     cover_image_url: unsplash(IMG.glovesWheel, 1800), published_at: "2026-06-03T16:00:00Z",
     video_url: "https://www.youtube.com/watch?v=Aw0L44rj364",
-    body: `Ahead of this year's Monaco Grand Prix, Luca Moretti talks us through his pole lap from 2025, corner by corner. From the commitment through Casino Square to the "hold your breath" moment at the Swimming Pool, this is what a lap of the Principality feels like from the cockpit.`,
+    body: `Ahead of this year's Monaco Grand Prix, Nesyah Rodriguez talks us through his pole lap from 2025, corner by corner. From the commitment through Casino Square to the "hold your breath" moment at the Swimming Pool, this is what a lap of the Principality feels like from the cockpit.`,
   },
   {
     slug: "fan-zone-silverstone-2026",

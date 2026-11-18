@@ -70,6 +70,22 @@ const nextConfig: NextConfig = {
       expire: 60 * 60,
     },
   },
+  async redirects() {
+    // Luca Moretti was renamed Nesyah Rodriguez; keep old links working.
+    return [
+      { source: "/team/luca-moretti", destination: "/team/nesyah-rodriguez", permanent: true },
+      {
+        source: "/news/moretti-takes-sao-paulo-podium-in-the-rain",
+        destination: "/news/rodriguez-takes-sao-paulo-podium-in-the-rain",
+        permanent: true,
+      },
+      {
+        source: "/news/behind-the-visor-moretti-video",
+        destination: "/news/behind-the-visor-rodriguez-video",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
